@@ -69,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {  
 const navigate = useNavigate()
 
+
   const [anchorEl, setAnchorEl] = React.useState(null);  
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);  
   const [drawerOpen, setDrawerOpen] = React.useState(false);  
@@ -123,6 +124,8 @@ const navigate = useNavigate()
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>  
       <MenuItem onClick={()=>navigate('/login')}>Login</MenuItem> 
       <MenuItem onClick={()=>navigate('/about')}>About Us</MenuItem>  
+      <MenuItem onClick={()=>navigate('/cart')}>cart</MenuItem>  
+
  
     </Menu>  
   );  
@@ -144,10 +147,10 @@ const navigate = useNavigate()
       open={isMobileMenuOpen}  
       onClose={handleMobileMenuClose}  
     >  
-      <MenuItem>  
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">  
+      <MenuItem  onClick={() => navigate('/cart')}>  
+        <IconButton  size="large" aria-label="show 4 new mails" color="inherit">  
           <Badge badgeContent={4} color="error">  
-            <ShoppingCartIcon />  
+            <ShoppingCartIcon  />  
           </Badge>  
         </IconButton>  
         <p>Cart</p>  

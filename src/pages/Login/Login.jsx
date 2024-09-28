@@ -16,7 +16,7 @@ const LoginPage = () => {
     return (
       <>
       <Navbar/>
-        <Container component="main" maxWidth="xs" sx={{backgroundColor:'yellow'}}>
+        <Container component="main" maxWidth="xs" sx={{backgroundColor:'yellow',borderRadius:5,marginBottom:10,paddingBottom:2}}>
             <Box
                 sx={{
                     display: 'flex',

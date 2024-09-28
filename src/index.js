@@ -10,6 +10,7 @@ import ProductGallery from './components/ProductGallery';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import About from './pages/About/About';
+import Cart from './pages/Cart/Cart';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <div><About/></div>,
+  },
+  
+  {
+    path: "/cart",
+    element: <div><Cart/></div>,
   },
 ]);
 

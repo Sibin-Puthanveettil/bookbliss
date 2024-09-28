@@ -50,7 +50,7 @@ const RegisterPage = () => {
         <>
         <Navbar/>
 
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" sx={{backgroundColor:'yellow',borderRadius:5,marginBottom:10,paddingBottom:5}}>
             <Box
                 sx={{
                     display: 'flex',
