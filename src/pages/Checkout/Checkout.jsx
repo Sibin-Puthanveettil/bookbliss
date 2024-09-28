@@ -85,6 +85,7 @@ const Checkout = () => {
             </Card>
           </Grid>
           <Grid item md={7}>
+            
             <Card>
               <Typography variant="h6" className="card-header">
                 Billing Address

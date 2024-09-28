@@ -93,3 +93,4 @@ At The Enchanted Shelf, we believe that every book holds a world of magic, waiti
 };
 
 export default Footer;
+
