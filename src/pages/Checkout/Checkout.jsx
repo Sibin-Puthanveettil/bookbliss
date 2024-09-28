@@ -16,7 +16,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Footer, Navbar } from "../components";
+import { Footer, Navbar } from "../../components";
 
 const Checkout = () => {
   // Sample cart data

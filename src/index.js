@@ -7,7 +7,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookCarousel from './components/BookCarousel';
 import ProductGallery from './components/ProductGallery';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import About from './pages/About/About';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -36,8 +38,16 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "about",
-    element: <div>About</div>,
+    path: "/register", 
+    element:(
+      <div>
+    <Register/>
+    </div>
+    )
+  },
+  {
+    path: "/about",
+    element: <div><About/></div>,
   },
 ]);
 

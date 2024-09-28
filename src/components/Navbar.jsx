@@ -119,7 +119,9 @@ const navigate = useNavigate()
     >  
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>  
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>  
-      <MenuItem onClick={()=>navigate('/login')}>Login</MenuItem>  
+      <MenuItem onClick={()=>navigate('/login')}>Login</MenuItem> 
+      <MenuItem onClick={()=>navigate('/about')}>About Us</MenuItem>  
+ 
     </Menu>  
   );  
 
@@ -277,7 +279,7 @@ const navigate = useNavigate()
             component="div"  
             sx={{ display: { xs: 'none', sm: 'block' } }}  
           >  
-            <img src={sitelogo} width={200}/>
+            <img src={sitelogo} onClick={() => navigate('/')} width={200}/>
           </Typography>  
           <Search>  
             <SearchIconWrapper>  
