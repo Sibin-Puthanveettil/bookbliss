@@ -125,6 +125,7 @@ const navigate = useNavigate()
       <MenuItem onClick={()=>navigate('/login')}>Login</MenuItem> 
       <MenuItem onClick={()=>navigate('/about')}>About Us</MenuItem>  
       <MenuItem onClick={()=>navigate('/cart')}>cart</MenuItem>  
+      <MenuItem onClick={()=>navigate('/addbook')}>Add Book</MenuItem>  
 
  
     </Menu>  
