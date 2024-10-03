@@ -21,7 +21,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';  
 import sitelogo from '../LOGO 2.png';
 import {navigate,useNavigate} from 'react-router-dom';
-
+import ListSubheader from '@mui/material/ListSubheader'; 
 
 
 
@@ -120,7 +120,7 @@ const navigate = useNavigate()
       open={isMenuOpen}  
       onClose={handleMenuClose}  
     >  
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>  
+      <MenuItem onClick={()=>navigate('/profile')}>Profile</MenuItem>  
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>  
       <MenuItem onClick={()=>navigate('/login')}>Login</MenuItem> 
       <MenuItem onClick={()=>navigate('/about')}>About Us</MenuItem>  
@@ -185,85 +185,55 @@ const navigate = useNavigate()
 
   const sidebarList = () => (  
     <Box  
-      sx={{ width: 250 }}  
+       sx={{  
+          width: 250,  
+          backgroundColor: '#282c34',   // Main sidebar background  
+          color: '#FFFFFF',   
+          display: 'flex',  
+          flexDirection: 'column',  
+          boxShadow: '2px 0 5px rgba(0,0,0,0.5)',   
+          padding: 0,   
+      }}  
       role="presentation"  
       onClick={handleDrawerClose}  
       onKeyDown={handleDrawerClose}  
     >  
       <List>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Home" />  
-  </ListItem>  
-  ---------------------
-    <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Fiction" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Non-Fiction" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Children's Books" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Mystery" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Science Fiction" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Fantasy" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Graphic Novels" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Others" />  
-  </ListItem>  
-  {/* New Items */}  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Historical Fiction" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Biography" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Poetry" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Cookbooks" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Self-Help" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Travel" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="True Crime" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Comics" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Classic Literature" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Anthology" />  
-  </ListItem>  
+        {/* Book Categories Header */}  
+        <ListSubheader   
+          sx={{   
+            backgroundColor: '#444', // Darker background color for the header  
+            color: 'white', // Attractive text color  
+            fontWeight: 'bold',   
+            textAlign: 'center',  // Center the header text  
+            fontSize: '1.25rem',   // Larger font size  
+            padding: '16px 0',    // Add padding for spacing  
+          }}   
+        >  
+          Book Categories  
+        </ListSubheader>  
 
-  ---------------------
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Products" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="About" />  
-  </ListItem>  
-  <ListItem button sx={{ cursor: 'pointer' }}>  
-    <ListItemText primary="Contact" />  
-  </ListItem>  
-</List>
+        {/* List Items with hover effect */}  
+        {["Home", "Fiction", "Non-Fiction", "Children's Books", "Mystery", "Science Fiction", "Fantasy", "Graphic Novels", "Others",   
+          "Historical Fiction", "Biography", "Poetry", "Cookbooks", "Self-Help", "Travel", "True Crime", "Comics",   
+          "Classic Literature", "Anthology", "Products", "About", "Contact"].map(item => (   
+          <ListItem   
+            button   
+            key={item}  
+            sx={{   
+              cursor: 'pointer',   
+              '&:hover': {  
+                backgroundColor: 'E5CCFF', // Dark background on hover  
+                color: '#FFFFFF', // Keep text color white for contrast  
+              },  
+            }}  
+          >  
+            <ListItemText primary={item} />  
+          </ListItem>  
+        ))}           
+      </List>  
     </Box>  
-  );  
+);
 
   return (  
     <Box sx={{ flexGrow: 1 }}>  

@@ -13,6 +13,7 @@ import About from './pages/About/About';
 import Cart from './pages/Cart/Cart';
 import Addbook from './pages/Dashbord/Addbook/Addbook';
 import Checkout from './pages/Checkout/Checkout';
+import Profile from './components/profile';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -64,6 +65,13 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <div><Checkout/></div>,
+  },
+
+  {
+    path: "/profile",
+    element: <div><Navbar />
+    <Profile/>
+    <Footer/></div>,
   },
 ]);
 
