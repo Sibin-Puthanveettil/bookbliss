@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import BookCarousel from './components/BookCarousel';
 import ProductGallery from './components/ProductGallery';
 import Login from './pages/Login';
+import Profile from './components/profile';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -38,6 +39,13 @@ const router = createBrowserRouter([
   {
     path: "about",
     element: <div>About</div>,
+  },
+
+  {
+    path: "profile",
+    element:<><Navbar />
+    <Profile/>
+    <Footer/></> 
   },
 ]);
 
