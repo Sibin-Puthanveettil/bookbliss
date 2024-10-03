@@ -100,7 +100,7 @@ const Addbook = () => {
   
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
       <>
-      <Navbar/>
+     
       </>
       <Container sx={{backgroundColor:'LightYellow',marginTop:5,borderRadius:5,marginBottom:5,paddingTop:2}}>
       <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
@@ -260,11 +260,7 @@ const Addbook = () => {
     </Stack>
 </div>
     </Container>
-<Footer
-sx={{
-  display:'flex',
-}}
-/>
+
     </Box>
   );
 };

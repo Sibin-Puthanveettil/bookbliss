@@ -20,7 +20,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';  
 import ListItemText from '@mui/material/ListItemText';  
 import sitelogo from '../LOGO 2.png';
-import {navigate,useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import ListSubheader from '@mui/material/ListSubheader'; 
 
 
@@ -148,14 +148,14 @@ const navigate = useNavigate()
       open={isMobileMenuOpen}  
       onClose={handleMobileMenuClose}  
     >  
-      <MenuItem  onClick={() => navigate('/cart')}>  
-        <IconButton  size="large" aria-label="show 4 new mails" color="inherit">  
-          <Badge badgeContent={4} color="error">  
-            <ShoppingCartIcon  />  
-          </Badge>  
-        </IconButton>  
-        <p>Cart</p>  
-      </MenuItem>  
+       <MenuItem onClick={() => navigate('/cart')}>  
+      <IconButton size="large" aria-label="show 4 new mails" color="inherit">  
+        <Badge badgeContent={4} color="error">  
+          <ShoppingCartIcon />  
+        </Badge>  
+      </IconButton>  
+      <p>Cart</p>  
+    </MenuItem>   
       <MenuItem>  
         <IconButton  
           size="large"  
