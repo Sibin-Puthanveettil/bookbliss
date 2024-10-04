@@ -7,18 +7,23 @@ const ProfileContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
-`; 
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+`;
 
 const ProfileCard = styled.div`
   width: 100%;
   max-width: 800px;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 40px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 const ProfileHeader = styled.div`
@@ -37,6 +42,8 @@ const Avatar = styled.img`
   width: 160px;
   height: 160px;
   border-radius: 50%;
+  border: 4px solid #4a90e2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
 const AvatarOverlay = styled.div`
@@ -80,9 +87,10 @@ const NameAndDetailsContainer = styled.div`
 `;
 
 const Name = styled.h2`
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
   margin-bottom: 8px;
+  color: #333;
 `;
 
 const Email = styled.p`
@@ -91,7 +99,7 @@ const Email = styled.p`
 `;
 
 const Button = styled.button`
-  background-color: #333;
+  background-color: #4a90e2;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -103,7 +111,7 @@ const Button = styled.button`
   align-self: flex-start;
 
   &:hover {
-    background-color: #111;
+    background-color: #357ab8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -123,9 +131,10 @@ const Section = styled.div`
 `;
 
 const SectionTitle = styled.h3`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   margin-bottom: 16px;
+  color: #4a90e2;
 `;
 
 const Modal = styled.div`
@@ -136,20 +145,32 @@ const Modal = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const ModalContent = styled.div`
-  background-color: #fefefe;
+  background-color: #ffffff;
   padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 600px;
   position: relative;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const CloseButton = styled.button`
@@ -171,6 +192,7 @@ const ModalTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 24px;
+  color: #4a90e2;
 `;
 
 const ModalForm = styled.form`
@@ -184,6 +206,12 @@ const ModalInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
 `;
 
 const ModalTextarea = styled.textarea`
@@ -192,10 +220,16 @@ const ModalTextarea = styled.textarea`
   border-radius: 4px;
   font-size: 16px;
   resize: vertical;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
 `;
 
 const ModalButton = styled.button`
-  background-color: #333;
+  background-color: #4a90e2;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -207,7 +241,7 @@ const ModalButton = styled.button`
   align-self: flex-end;
 
   &:hover {
-    background-color: #111;
+    background-color: #357ab8;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -274,10 +308,7 @@ const ProfilePage = () => {
             <ModalForm>
               <ModalInput type="text" id="name" name="name" defaultValue="PRAVEEN R" />
               <ModalInput type="email" id="email" name="email" defaultValue="praveen@gmail.com" />
-              <ModalTextarea id="about" name="about">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut risus in augue
-                luctus venenatis.
-              </ModalTextarea>
+              <ModalTextarea id="about" name="about" defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut risus in augue luctus venenatis." />
               <ModalInput type="tel" id="phone" name="phone" defaultValue="123-456-7890" />
               <ModalInput type="text" id="address" name="address" defaultValue="123 Main St, Anytown USA" />
               <ModalButton type="submit">Save Changes</ModalButton>

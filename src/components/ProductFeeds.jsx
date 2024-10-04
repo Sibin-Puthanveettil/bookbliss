@@ -140,6 +140,19 @@ const ProductFeeds = () => {
                     </div>
                 </div>
             )}
+
+            {isModalOpen && selectedBook && (
+                <div style={styles.modalOverlay}>
+                    <div style={styles.modalContent}>
+                        <button style={styles.closeButton} onClick={handleCloseModal}>X</button>
+                        <iframe
+                            src={'https://english.pratilipi.com/read/my-brother-ki-dulhan-my-brother-ki-dulhan-qpijgp9qgsww-g785688b193y44n?redirectTo=%2Fseries%2Fmy-brother-ki-dulhan-completed-by-s-d-otsix63fzh0f'} // Assuming each book has a `read_url` field  
+                            title={selectedBook.title}
+                            style={styles.iframe}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -312,8 +325,8 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         marginTop: '20px',
-        overflow:'auto',
-        maxWidth:'100%'
+        overflow: 'auto',
+        maxWidth: '100%'
     },
     pageButton: {
         padding: '10px 15px',
