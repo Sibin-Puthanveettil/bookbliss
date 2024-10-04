@@ -306,7 +306,7 @@ const styles = {
 
     price: {
         fontWeight: 'bold', // Make the text bold
-        fontSize: '1.2em',  // Optional: Adjust the font size
+        fontSize: '1.5em',  // Optional: Adjust the font size
         color: '#333',      // Optional: Change the color if needed
     },
 };
