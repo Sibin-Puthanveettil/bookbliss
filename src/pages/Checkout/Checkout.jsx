@@ -14,12 +14,13 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Footer, Navbar } from "../../components";
+import { Payment } from "@mui/icons-material"; // Importing an icon
 
 const Checkout = () => {
-  // Sample cart data
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -60,8 +61,8 @@ const Checkout = () => {
       <Container>
         <Grid container spacing={3}>
           <Grid item md={5}>
-            <Card>
-              <Typography variant="h6" className="card-header">
+            <Card elevation={3}>
+              <Typography variant="h6" className="card-header" style={{ padding: '16px', backgroundColor: '#f5f5f5' }}>
                 Order Summary
               </Typography>
               <CardContent>
@@ -85,48 +86,27 @@ const Checkout = () => {
             </Card>
           </Grid>
           <Grid item md={7}>
-            
-            <Card>
-              <Typography variant="h6" className="card-header">
+            <Card elevation={3}>
+              <Typography variant="h6" className="card-header" style={{ padding: '16px', backgroundColor: '#f5f5f5' }}>
                 Billing Address
               </Typography>
               <CardContent>
                 <form>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                      <TextField
-                        label="First Name"
-                        required
-                        fullWidth
-                      />
+                      <TextField label="First Name" required fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <TextField
-                        label="Last Name"
-                        required
-                        fullWidth
-                      />
+                      <TextField label="Last Name" required fullWidth />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        label="Email"
-                        type="email"
-                        required
-                        fullWidth
-                      />
+                      <TextField label="Email" type="email" required fullWidth />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        label="Address"
-                        required
-                        fullWidth
-                      />
+                      <TextField label="Address" required fullWidth />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        label="Address 2 (Optional)"
-                        fullWidth
-                      />
+                      <TextField label="Address 2 (Optional)" fullWidth />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <FormControl fullWidth required>
@@ -139,7 +119,7 @@ const Checkout = () => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <FormControl fullWidth required>
-                        <InputLabel>State</InputLabel>
+                                               <InputLabel>State</InputLabel>
                         <Select defaultValue="">
                           <MenuItem value="">Choose...</MenuItem>
                           <MenuItem value="Punjab">Punjab</MenuItem>
@@ -147,34 +127,40 @@ const Checkout = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <TextField
-                        label="Zip"
-                        required
-                        fullWidth
-                      />
+                      <TextField label="Zip" required fullWidth />
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant="h6">Payment</Typography>
+                      <Typography variant="h6" style={{ marginTop: '16px' }}>Payment</Typography>
                       <TextField
                         label="Name on card"
                         required
                         fullWidth
+                        style={{ marginBottom: '16px' }}
                       />
                       <TextField
                         label="Credit card number"
                         required
                         fullWidth
+                        style={{ marginBottom: '16px' }}
                       />
-                      <TextField
-                        label="Expiration"
-                        required
-                        fullWidth
-                      />
-                      <TextField
-                        label="CVV"
-                        required
-                        fullWidth
-                      />
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Expiration"
+                            required
+                            fullWidth
+                            style={{ marginBottom: '16px' }}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="CVV"
+                            required
+                            fullWidth
+                            style={{ marginBottom: '16px' }}
+                          />
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
                   <Button
@@ -182,10 +168,9 @@ const Checkout = () => {
                     color="primary"
                     fullWidth
                     type="submit"
-                    style={{ marginTop: 16 }}
-                    disabled
+                    style={{ marginTop: 16, backgroundColor: '#1976d2', '&:hover': { backgroundColor: '#115293' } }}
                   >
-                    Continue to checkout
+                    <Payment style={{ marginRight: '8px' }} /> Continue to Checkout
                   </Button>
                 </form>
               </CardContent>
@@ -200,7 +185,7 @@ const Checkout = () => {
     <>
       <Navbar />
       <Container className="my-3 py-3">
-        <Typography variant="h4" align="center">Checkout</Typography>
+        <Typography variant="h4" align="center" gutterBottom>Checkout</Typography>
         <hr />
         {cartItems.length ? <ShowCheckout /> : <EmptyCart />}
       </Container>
@@ -210,3 +195,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
