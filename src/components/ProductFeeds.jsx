@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCartPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-// import './ProductFeeds.css'; // Import styles (adjust if necessary)  
 
 const ProductFeeds = () => {
     const [books, setBooks] = useState([]);
@@ -11,32 +10,14 @@ const ProductFeeds = () => {
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [booksPerPage] = useState(8); // Number of books to display per page
 
     const languages = [
-        'English',
-        'Hindi',
-        'Bengali',
-        'Marathi',
-        'Tamil',
-        'Telugu',
-        'Gujarati',
-        'Malayalam',
-        'Kannada',
-        'Odia',
-        'Punjabi',
-        'Assamese',
-        'Maithili',
-        'Urdu',
-        'Manipuri',
-        'Dogri',
-        'Sanskrit',
-        'Santali',
-        'Konkani',
-        'Nepali',
-        'Bodo',
-        'Sindhi',
-        'Rajasthani',
-        'Marwari'
+        'English', 'Hindi', 'Bengali', 'Marathi', 'Tamil', 'Telugu',
+        'Gujarati', 'Malayalam', 'Kannada', 'Odia', 'Punjabi', 'Assamese',
+        'Maithili', 'Urdu', 'Manipuri', 'Dogri', 'Sanskrit', 'Santali',
+        'Konkani', 'Nepali', 'Bodo', 'Sindhi', 'Rajasthani', 'Marwari'
     ];
 
     useEffect(() => {
@@ -59,16 +40,24 @@ const ProductFeeds = () => {
         console.log('Selected Language:', language);
     };
 
-    // Open modal with selected book's URL  
     const handleReadClick = (book) => {
         setSelectedBook(book);
         setIsModalOpen(true);
     };
 
-    // Close modal  
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedBook(null);
+    };
+
+    // Pagination logic
+    const indexOfLastBook = currentPage * booksPerPage;
+    const indexOfFirstBook = indexOfLastBook - booksPerPage;
+    const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+    const totalPages = Math.ceil(books.length / booksPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
     };
 
     if (loading) return <p style={styles.loadingText}>Loading...</p>;
@@ -94,7 +83,7 @@ const ProductFeeds = () => {
             </div>
 
             <div style={styles.gallery}>
-                {books.map((book) => (
+                {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>
                         <img src={book.imageurl || 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale,dpr_1.5/jackets/9781408855652.jpg'} alt={book.title} style={styles.bookImage} loading='lazy' />
                         <div style={styles.bookInfo}>
@@ -103,7 +92,7 @@ const ProductFeeds = () => {
                             <p style={styles.year}>Published: {book.publication_year}</p>
                             <p style={styles.description}>{book.description}</p>
                             <p style={styles.genres}>Genres: {book.genre.join(', ')}</p>
-                            <p style={styles.price}>₹ 299 /- {book.price}</p> {/* Added price here */}
+                            <p style={styles.price}>₹ 299 /- {book.price}</p>
 
                             {/* Action buttons */}
                             <div style={styles.buttonContainer}>
@@ -122,6 +111,21 @@ const ProductFeeds = () => {
                 ))}
             </div>
 
+            {/* Pagination Controls */}
+            <div style={styles.paginationContainer}>
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index + 1}
+                        style={{
+                            ...styles.pageButton,
+                            backgroundColor: currentPage === index + 1 ? '#6a0dad' : '#22183b',
+                        }}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>
 
             {/* Modal for iframe viewer */}
             {isModalOpen && selectedBook && (
@@ -146,17 +150,17 @@ const styles = {
         backgroundColor: '#f9f9f9',
     },
     title: {
-        fontSize: '2em',  // Increased font size for prominence  
+        fontSize: '2em',
         marginBottom: '20px',
         textAlign: 'center',
-        fontWeight: 'bold',  // Makes the font bold  
-        color: '#ffffff',    // White color for visibility  
-        background: 'linear-gradient(90deg, #6a0dad, #9c27b0)', // Gradient background  
-        WebkitBackgroundClip: 'text', // Clips the background to the text  
-        WebkitTextFillColor: 'transparent', // Makes the text fill transparent to show the gradient  
-        letterSpacing: '2px',  // Increases the spacing between letters  
-        textTransform: 'uppercase', // Transforms the text to uppercase for a bold look  
-        padding: '10px 0',     // Adds some padding around the header  
+        fontWeight: 'bold',
+        color: '#ffffff',
+        background: 'linear-gradient(90deg, #6a0dad, #9c27b0)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        letterSpacing: '2px',
+        textTransform: 'uppercase',
+        padding: '10px 0',
     },
     languageButtonContainer: {
         whiteSpace: 'nowrap',
@@ -177,10 +181,6 @@ const styles = {
         color: 'white',
         cursor: 'pointer',
         transition: 'background-color 0.3s',
-        overflow: 'hidden', // or 'auto', depending on your requirements  
-        maxWidth: '100%',
-        textOverflow: 'ellipsis', // Optional: Use ellipsis if the text overflows  
-        whiteSpace: 'nowrap', // Optional: Prevents wrapping to a new line  
     },
     gallery: {
         display: 'grid',
@@ -303,12 +303,28 @@ const styles = {
         height: '400px',
         border: 'none',
     },
-
     price: {
-        fontWeight: 'bold', // Make the text bold
-        fontSize: '1.5em',  // Optional: Adjust the font size
-        color: '#333',      // Optional: Change the color if needed
+        fontWeight: 'bold',
+        fontSize: '1.5em',
+        color: '#333',
+    },
+    paginationContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '20px',
+        overflow:'auto',
+        maxWidth:'100%'
+    },
+    pageButton: {
+        padding: '10px 15px',
+        margin: '0 5px',
+        border: 'none',
+        borderRadius: '5px',
+        color: 'white',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s',
     },
 };
 
 export default ProductFeeds;
+
