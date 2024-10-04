@@ -1,15 +1,39 @@
-import React from "react";
-// import { Link } from "react-router-dom";  
+import React, { useState } from "react";
 import { Footer, Navbar } from "../../components";
-import { Container, TextField, Button, Typography, Link, Box } from '@mui/material';
+import { Container, TextField, Button, Typography, Link, Box, Snackbar, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import BackkImage from './Bg.jpg'
+import BackkImage from './Bg.jpg';
+
 const LoginPage = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = (event) => {
         event.preventDefault();
-        // Add your login logic here  
+
+        // Validate email and password
+        if (!email || !password) {
+            setErrorMessage("Email and password are required.");
+            setOpenSnackbar(true);
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            setErrorMessage("Please enter a valid email address.");
+            setOpenSnackbar(true);
+            return;
+        }
+
+        // Add your login logic here
+        console.log('Login successful!', { email, password });
+    };
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
     };
 
     return (
@@ -49,6 +73,8 @@ const LoginPage = () => {
                             label="Email Address"
                             autoComplete="email"
                             autoFocus
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             margin="normal"
@@ -57,8 +83,10 @@ const LoginPage = () => {
                             label="Password"
                             type="password"
                             autoComplete="current-password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, backgroundColor:'#333333' }}>
                             Login
                         </Button>
                         <Link href="#" variant="body2" onClick={() => alert('Forgot Password')}>
@@ -84,9 +112,14 @@ const LoginPage = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     filter: 'blur(3px)',
-                    zIndex: -9999999999999999// Behind the container  
+                    zIndex: -999999 // Behind the container  
                 }}
             />
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
             <Footer />
         </>
     );

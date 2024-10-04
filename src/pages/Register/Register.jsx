@@ -31,13 +31,41 @@ const RegisterPage = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const { password, confirmPassword } = formData;
+    const validateForm = () => {
+        const { firstName, secondName, email, mobileNumber, password, confirmPassword } = formData;
+
+        if (!firstName || !secondName || !email || !mobileNumber || !password || !confirmPassword) {
+            setErrorMessage("All fields are required.");
+            setOpenSnackbar(true);
+            return false;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            setErrorMessage("Please enter a valid email address.");
+            setOpenSnackbar(true);
+            return false;
+        }
+
+        if (password.length < 6) {
+            setErrorMessage("Password must be at least 6 characters long.");
+            setOpenSnackbar(true);
+            return false;
+        }
 
         if (password !== confirmPassword) {
-            setErrorMessage("Passwords don't match");
+            setErrorMessage("Passwords don't match.");
             setOpenSnackbar(true);
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (!validateForm()) {
             return;
         }
 
@@ -70,7 +98,7 @@ const RegisterPage = () => {
                     }}
                 >
                     <Typography component="h1" variant="h5">
-                     <b> REGISTER</b>
+                        <b> REGISTER</b>
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, display: 'flex', flexDirection: 'column' }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
@@ -142,7 +170,7 @@ const RegisterPage = () => {
                                 onChange={handleChange}
                             />
                         </Box>
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, backgroundColor: '#333333' }}>
                             Register
                         </Button>
                         <Typography variant="body2" align="center" sx={{ mt: 2 }}>
@@ -168,7 +196,12 @@ const RegisterPage = () => {
                     zIndex: -999999 // Behind the container  
                 }}
             />
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Positioning the Snackbar
+            >
                 <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
                     {errorMessage}
                 </Alert>
@@ -179,3 +212,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
