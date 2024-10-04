@@ -220,7 +220,7 @@ const PrimarySearchAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#294769' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#333333' }}>
         <Toolbar>
           <IconButton
             size="large"

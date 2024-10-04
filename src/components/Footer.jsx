@@ -26,7 +26,7 @@ const SocialIcon = styled(IconButton)(({ theme }) => ({
 
 const Footer = () => {
   return (
-    <FooterContainer component="footer" sx={{ backgroundColor: '#294769' }}>
+    <FooterContainer component="footer" sx={{ backgroundColor: '#333333' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={3}>
