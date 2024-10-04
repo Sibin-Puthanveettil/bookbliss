@@ -119,8 +119,8 @@ const PrimarySearchAppBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
+      
       <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
       <MenuItem onClick={() => navigate('/cart')}>cart</MenuItem>
