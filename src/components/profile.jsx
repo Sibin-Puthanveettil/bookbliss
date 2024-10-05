@@ -99,16 +99,23 @@ const Email = styled.p`
 `;
 
 const AccountAgeBadge = styled.span`  
-  background: linear-gradient(145deg, #f3e5ab, #e4c600); /* A gradient for the gold effect */  
-  color: black;  
+  background: linear-gradient(145deg, #ee950b, #e4c600); /* A gradient for the gold effect */  
+  color: white;  
   padding: 5px 10px;  
   border-radius: 12px;  
   font-size: 14px;  
   font-weight: bold;  
   margin-top: 8px;  
-  
-              -6px -6px 12px #ffef80; /* Creates a 3D shadow effect */  
+  width: 100px; /* Set width to 65px */
+  box-shadow: 4px 4px 8px rgba(255, 239, 128, 0.6); /* Increased shadow effect */  
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
 `;
+const BadgeSymbol = styled.span`
+  margin-right: 5px; /* Space between the symbol and text */
+`;
+
+
 
 const Button = styled.button`  
   background-color: #4a90e2;  
@@ -279,14 +286,17 @@ const ProfilePage = () => {
             </AvatarOverlay>
           </AvatarContainer>
           <NameAndDetailsContainer>
-            <Name>PRAVEEN R</Name>
-            <Email>praveen@gmail.com</Email>
+            <Name>Jacquline Fernandez</Name>
+            <Email>Jacquline@hotmail.com</Email>
           
             <Button onClick={handleEditProfile}>Edit Profile</Button>
            
           </NameAndDetailsContainer>
         </ProfileHeader>
-        <AccountAgeBadge>Golden User</AccountAgeBadge>
+        <AccountAgeBadge>
+    <BadgeSymbol>★</BadgeSymbol> {/* Badge symbol */}
+    Gold User
+  </AccountAgeBadge>
         <Section>
           <SectionTitle>About</SectionTitle>
           <p>

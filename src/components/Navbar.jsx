@@ -13,17 +13,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import sitelogo from '../LOGO 2.png';  // Logo import  
-import profilePhoto from '../LOGO 2.png';   // Profile image import  
-import { useNavigate } from 'react-router-dom';
 import ListSubheader from '@mui/material/ListSubheader';
-
-// Your existing styled components... 
+import { useNavigate } from 'react-router-dom';
+import sitelogo from '../LOGO 2.png';  // Logo import  
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -73,9 +69,19 @@ const PrimarySearchAppBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [notificationMenuAnchorEl, setNotificationMenuAnchorEl] = React.useState(null);
+
+  const notifications = [
+    "New book added: 'The Great Gatsby'",
+    "Your order has been shipped!",
+    "Reminder: Your book return is due soon.",
+    "New message from the support team.",
+    "A new review has been posted on your book."
+  ];
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isNotificationMenuOpen = Boolean(notificationMenuAnchorEl);
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true);
@@ -102,6 +108,14 @@ const PrimarySearchAppBar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleNotificationMenuOpen = (event) => {
+    setNotificationMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationMenuClose = () => {
+    setNotificationMenuAnchorEl(null);
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -119,11 +133,10 @@ const PrimarySearchAppBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
-      
+          <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
       <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
-      <MenuItem onClick={() => navigate('/cart')}>cart</MenuItem>
+      <MenuItem onClick={() => navigate('/cart')}>Cart</MenuItem>
       <MenuItem onClick={() => navigate('/addbook')}>Add Book</MenuItem>
     </Menu>
   );
@@ -166,6 +179,31 @@ const PrimarySearchAppBar = () => {
     </Menu>
   );
 
+  const notificationMenuId = 'notification-menu';
+  const renderNotificationMenu = (
+    <Menu
+      anchorEl={notificationMenuAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={notificationMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isNotificationMenuOpen}
+      onClose={handleNotificationMenuClose}
+    >
+      {notifications.map((notification, index) => (
+        <MenuItem key={index} onClick={handleNotificationMenuClose}>
+          {notification}
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+
   const sidebarList = () => (
     <Box
       sx={{
@@ -182,7 +220,6 @@ const PrimarySearchAppBar = () => {
       onKeyDown={handleDrawerClose}
     >
       <List>
-        {/* Book Categories Header */}
         <ListSubheader
           sx={{
             backgroundColor: '#294769', // Darker background color for the header  
@@ -196,7 +233,6 @@ const PrimarySearchAppBar = () => {
           Book Categories
         </ListSubheader>
 
-        {/* List Items with hover effect */}
         {["Home", "Fiction", "Non-Fiction", "Children's Books", "Mystery", "Science Fiction", "Fantasy", "Graphic Novels", "Others",
           "Historical Fiction", "Biography", "Poetry", "Cookbooks", "Self-Help", "Travel", "True Crime", "Comics",
           "Classic Literature", "Anthology", "Products", "About", "Contact"].map(item => (
@@ -238,7 +274,7 @@ const PrimarySearchAppBar = () => {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            <img src={sitelogo} onClick={() => navigate('/')} width={200} />
+            <img src={sitelogo} onClick={() => navigate('/')} width={200} alt="Site Logo" />
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -251,17 +287,13 @@ const PrimarySearchAppBar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show new notifications"
               color="inherit"
+              onClick={handleNotificationMenuOpen}
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={notifications.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -301,6 +333,7 @@ const PrimarySearchAppBar = () => {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {renderNotificationMenu}
       <Drawer open={drawerOpen} onClose={handleDrawerClose}>
         {sidebarList()}
       </Drawer>
@@ -309,3 +342,5 @@ const PrimarySearchAppBar = () => {
 };
 
 export default PrimarySearchAppBar;
+
+

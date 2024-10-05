@@ -12,6 +12,7 @@ const ProductFeeds = () => {
     const [selectedBook, setSelectedBook] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [booksPerPage] = useState(8); // Number of books to display per page
+    const [cart, setCart] = useState({}); // State to track added books
 
     const languages = [
         'English', 'Hindi', 'Bengali', 'Marathi', 'Tamil', 'Telugu',
@@ -34,9 +35,6 @@ const ProductFeeds = () => {
 
         fetchBooks();
     }, []);
-
-
-    
 
     const handleLanguageSelect = (language) => {
         setSelectedLanguage(language);
@@ -63,6 +61,13 @@ const ProductFeeds = () => {
         setCurrentPage(pageNumber);
     };
 
+    const handleAddClick = (book) => {
+        setCart((prevCart) => ({
+            ...prevCart,
+            [book.id]: !prevCart[book.id], // Toggle the added state
+        }));
+    };
+
     if (loading) return <p style={styles.loadingText}>Loading...</p>;
     if (error) return <p style={styles.errorText}>{error}</p>;
 
@@ -84,7 +89,8 @@ const ProductFeeds = () => {
                     ))}
                 </div>
             </div>
-
+            {selectedLanguage && ( <h4 style={styles.SelectLang}> SELECTED LANGUAGE : {selectedLanguage.toUpperCase()}</h4>
+            )}
             <div style={styles.gallery}>
                 {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>
@@ -105,8 +111,8 @@ const ProductFeeds = () => {
                                 <button style={styles.button}>
                                     <FontAwesomeIcon icon={faShoppingCart} style={styles.icon} /> Purchase
                                 </button>
-                                <button style={styles.button}>
-                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon} /> Add
+                                <button style={styles.button} onClick={() => handleAddClick(book)}>
+                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon} /> {cart[book.id] ? 'Added' : 'Add'}
                                 </button>
                             </div>
                         </div>
@@ -131,19 +137,6 @@ const ProductFeeds = () => {
             </div>
 
             {/* Modal for iframe viewer */}
-            {isModalOpen && selectedBook && (
-                <div style={styles.modalOverlay}>
-                    <div style={styles.modalContent}>
-                        <button style={styles.closeButton} onClick={handleCloseModal}>X</button>
-                        <iframe
-                            src={'https://english.pratilipi.com/read/my-brother-ki-dulhan-my-brother-ki-dulhan-qpijgp9qgsww-g785688b193y44n?redirectTo=%2Fseries%2Fmy-brother-ki-dulhan-completed-by-s-d-otsix63fzh0f'} // Assuming each book has a `read_url` field  
-                            title={selectedBook.title}
-                            style={styles.iframe}
-                        />
-                    </div>
-                </div>
-            )}
-
             {isModalOpen && selectedBook && (
                 <div style={styles.modalOverlay}>
                     <div style={styles.modalContent}>
@@ -203,6 +196,9 @@ const styles = {
         gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
         gap: '20px',
         padding: '20px',
+    },
+    SelectLang: {
+        color: '#7b16ae',
     },
     bookCard: {
         background: 'white',

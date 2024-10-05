@@ -1,16 +1,17 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel'; // Import InputLabel
-import OutlinedInput from '@mui/material/OutlinedInput'; // Import OutlinedInput
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import { useTheme } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Container, Typography, Grid } from '@mui/material'
+import { Container, Typography, Grid, Snackbar, Alert } from '@mui/material';
+import axios from 'axios'; // Import axios  
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -23,23 +24,29 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 const Addbook = () => {
-  const theme = useTheme(); // Call useTheme at the top level
-  const [personName, setPersonName] = React.useState([]);
-  const [fileName, setFileName] = React.useState('');
+  const theme = useTheme();
+  const [personName, setPersonName] = useState([]);
+  const [fileName, setFileName] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  // Fetch data from the API using axios  
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get('https://freetestapi.com/api/v1/books');
+        const genres = response.data.map(book => book.genre[0]); // Get the first genre from each book  
+        setCategories([...new Set(genres)]); // Use set to avoid duplicates  
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
 
   const handleChange = (event) => {
     const {
@@ -67,6 +74,30 @@ const Addbook = () => {
     };
   };
 
+  const handleSubmit = () => {
+    // Validation logic
+    const bookName = document.getElementById('book-name').value;
+    const author = document.getElementById('author').value;
+    const amount = document.getElementById('outlined-adornment-amount').value;
+    const quantity = document.getElementById('quantity').value;
+
+    if (!bookName || !author || !amount || !quantity || personName.length === 0 || !fileName) {
+      setSnackbarMessage('Please fill in all fields and upload a file.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return;
+    }
+
+    // If validation passes, you can proceed with form submission logic here
+    setSnackbarMessage('Book added successfully!');
+    setSnackbarSeverity('success');
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <Container sx={{ backgroundColor: '#f6f6f6', marginTop: 5, borderRadius: 5, marginBottom: 5, padding: 4 }}>
       <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
@@ -77,6 +108,7 @@ const Addbook = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
+            id="book-name"
             label="Name Of Book"
             fullWidth
             sx={{ mb: 2 }}
@@ -84,6 +116,7 @@ const Addbook = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            id="author"
             label="Author"
             fullWidth
             sx={{ mb: 2 }}
@@ -105,19 +138,18 @@ const Addbook = () => {
             <Select
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
-              multiple
               value={personName}
               onChange={handleChange}
               input={<OutlinedInput label="Category" />}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {categories.map((category) => (
                 <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name)} // Call getStyles without theme
+                  key={category}
+                  value={category}
+                  style={getStyles(category)}
                 >
-                  {name}
+                  {category}
                 </MenuItem>
               ))}
             </Select>
@@ -125,6 +157,7 @@ const Addbook = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            id="quantity"
             label="Quantity No.s"
             fullWidth
             sx={{ mb: 2 }}
@@ -185,7 +218,7 @@ const Addbook = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack direction="row" spacing={2} justifyContent="center">
-            <Button variant="contained" color="success">
+            <Button variant="contained" color="success" onClick={handleSubmit}>
               Submit
             </Button>
             <Button variant="outlined" color="error">
@@ -194,9 +227,21 @@ const Addbook = () => {
           </Stack>
         </Grid>
       </Grid>
+
+      {/* Snackbar for validation messages */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }} >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
 
 export default Addbook;
+
 
