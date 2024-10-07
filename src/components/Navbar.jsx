@@ -137,6 +137,7 @@ const PrimarySearchAppBar = () => {
       <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
       <MenuItem onClick={() => navigate('/cart')}>Cart</MenuItem>
+      <MenuItem onClick={() => navigate('/Orders')}>Orders</MenuItem>
       <MenuItem onClick={() => navigate('/addbook')}>Add Book</MenuItem>
     </Menu>
   );
