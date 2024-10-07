@@ -18,6 +18,9 @@ import ProductFeeds from './components/ProductFeeds';
 import Banner from './components/Banner';
 import Orders from './pages/Orders/Orders';
 import OrdersTracking from './pages/Orders/OrdersTracking'
+import Admin from './pages/Admin/Admin';
+import LanguagePage from './pages/Admin/LanguagePage';
+import Categories from './pages/Admin/Categories';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -31,72 +34,93 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-       
-        <Banner/>
+
+        <Banner />
         {/* <ProductGallery/> */}
         {/* <BookCarousel /> */}
-     
-        <ProductFeeds/>
-        <Footer/>
+
+        <ProductFeeds />
+        <Footer />
       </div>
     ),
   },
   {
-    path: "/login", 
-    element:(
+    path: "/login",
+    element: (
       <div>
-    <Login/>
-    </div>
+        <Login />
+      </div>
     )
   },
   {
-    path: "/register", 
-    element:(
+    path: "/register",
+    element: (
       <div>
-    <Register/>
-    </div>
+        <Register />
+      </div>
     )
   },
   {
     path: "/about",
-    element: <div><About/></div>,
+    element: <div><About /></div>,
   },
-  
+
   {
     path: "/cart",
     element: <div><Navbar />
-    <Cart/>
-    <Footer/></div>,
+      <Cart />
+      <Footer /></div>,
   },
   {
     path: "/addbook",
     element: <div><Navbar />
-   <Addbook/>
-    <Footer/></div>,
+      <Addbook />
+      <Footer /></div>,
   },
   {
     path: "/checkout",
-    element: <div><Checkout/></div>,
+    element: <div><Checkout /></div>,
   },
 
   {
     path: "/profile",
     element: <div><Navbar />
-    <Profile/>
-    <Footer/></div>,
+      <Profile />
+      <Footer /></div>,
   },
   {
     path: "/Orders",
     element: <div><Navbar />
-    <Orders/>
-    <Footer/></div>,
+      <Orders />
+      <Footer /></div>,
   },
 
   {
     path: "/OrdersTracking",
     element: <div><Navbar />
-    <OrdersTracking/>
-    <Footer/></div>,
+      <OrdersTracking />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/Admin",
+    element: <div><Navbar />
+      <Admin />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/LanguagePage",
+    element: <div><Navbar />
+      <LanguagePage />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/Categories",
+    element: <div><Navbar />
+      <Categories />
+      <Footer /></div>,
   },
 ]);
 
@@ -106,9 +130,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <RouterProvider router={router}>
+    <RouterProvider router={router}>
       <App />
-     </RouterProvider>
+    </RouterProvider>
   </React.StrictMode>
 );
 

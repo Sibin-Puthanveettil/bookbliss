@@ -94,7 +94,7 @@ const ProductFeeds = () => {
             <div style={styles.gallery}>
                 {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>
-                        <img src={book.imageurl || 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale,dpr_1.5/jackets/9781408855652.jpg'} alt={book.title} style={styles.bookImage} loading='lazy' />
+                        <img src={book.imageurl || 'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={book.title} style={styles.bookImage} loading='lazy' />
                         <div style={styles.bookInfo}>
                             <h3 style={styles.bookTitle}>{book.title}</h3>
                             <p style={styles.author}>by {book.author}</p>
