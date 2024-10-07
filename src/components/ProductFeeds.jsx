@@ -73,7 +73,7 @@ const ProductFeeds = () => {
 
     return (
         <div style={styles.container}>
-            <h1 style={styles.title}>Unleash Your Imagination: Experience Book of the Day</h1>
+            {/* <h1 style={styles.title}>Unleash Your Imagination: Experience Book of the Day</h1> */}
 
             {/* Language Buttons */}
             <div style={styles.languageButtonContainer}>
@@ -181,15 +181,21 @@ const styles = {
         display: 'inline-flex',
     },
     languageButton: {
-        padding: '10px',
-        fontSize: '1em',
-        margin: '5px',
-        border: 'none',
-        borderRadius: '5px',
-        backgroundColor: '#22183b',
+        padding: '10px 15px',
+        fontSize: '0.7em',
         color: 'white',
+        backgroundColor: '#a42a26',
+        backgroundImage: 'linear-gradient(45deg, #a42a26, #9c27b0)',
+        border: 'none',
+        borderRadius: '10px',
         cursor: 'pointer',
-        transition: 'background-color 0.3s',
+        transition: 'transform 0.2s, background-color 0.3s',
+        margin: '0 5px',
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        boxSizing: 'border-box',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     },
     gallery: {
         display: 'grid',

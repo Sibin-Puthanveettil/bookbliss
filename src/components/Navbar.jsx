@@ -133,7 +133,7 @@ const PrimarySearchAppBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-          <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
+      <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
       <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
       <MenuItem onClick={() => navigate('/cart')}>Cart</MenuItem>
@@ -208,7 +208,7 @@ const PrimarySearchAppBar = () => {
     <Box
       sx={{
         width: 250,
-        backgroundColor: '#282c34', // Main sidebar background  
+        backgroundColor: '#4e125e', // Main sidebar background  
         color: '#FFFFFF',
         display: 'flex',
         flexDirection: 'column',
@@ -222,7 +222,7 @@ const PrimarySearchAppBar = () => {
       <List>
         <ListSubheader
           sx={{
-            backgroundColor: '#294769', // Darker background color for the header  
+            backgroundColor: '#4e125e', // Darker background color for the header  
             color: 'white', // Attractive text color  
             fontWeight: 'bold',
             textAlign: 'center', // Center the header text  
@@ -256,7 +256,7 @@ const PrimarySearchAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#333333' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#8c29a6' }} elevation={0}>
         <Toolbar>
           <IconButton
             size="large"

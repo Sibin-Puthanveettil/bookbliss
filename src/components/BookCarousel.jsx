@@ -32,18 +32,21 @@ const BookCarousel = () => {
     <Container
       sx={{
         padding: '40px',
-        backgroundColor: '#f5f5f5',
+        // backgroundColor: '#f5f5f5',
         borderRadius: '10px',
         marginTop: '20px'
       }}
     >
       <Typography
-        variant="h2"
+        variant="h4"
         align="center"
         gutterBottom
         sx={{
           fontWeight: 'bold',
-          color: 'black', // Change header color to black  
+          color: 'transparent', // Make text color transparent
+          background: 'linear-gradient(to right, #800080, #4B0082)', // Define your gradient colors (purple to dark purple)
+          backgroundClip: 'text', // Clip the background to the text
+          WebkitBackgroundClip: 'text', // For Safari compatibility
           textTransform: 'uppercase',
           letterSpacing: '1px',
           padding: '10px 0',

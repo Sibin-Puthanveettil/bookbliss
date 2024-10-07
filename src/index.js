@@ -15,6 +15,7 @@ import Addbook from './pages/Dashbord/Addbook/Addbook';
 import Checkout from './pages/Checkout/Checkout';
 import Profile from './components/profile';
 import ProductFeeds from './components/ProductFeeds';
+import Banner from './components/Banner';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -28,8 +29,10 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-        <BookCarousel />
+        <Banner/>
         {/* <ProductGallery/> */}
+        {/* <BookCarousel /> */}
+     
         <ProductFeeds/>
         <Footer/>
       </div>

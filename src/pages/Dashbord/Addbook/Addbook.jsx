@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Container, Typography, Grid, Snackbar, Alert } from '@mui/material';
-import axios from 'axios'; // Import axios  
+import axios from 'axios';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,18 +28,18 @@ const Addbook = () => {
   const theme = useTheme();
   const [personName, setPersonName] = useState([]);
   const [fileName, setFileName] = useState('');
+  const [fileUrl, setFileUrl] = useState(null); // New state for file URL  
   const [categories, setCategories] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
-  // Fetch data from the API using axios  
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get('https://freetestapi.com/api/v1/books');
-        const genres = response.data.map(book => book.genre[0]); // Get the first genre from each book  
-        setCategories([...new Set(genres)]); // Use set to avoid duplicates  
+        const genres = response.data.map(book => book.genre[0]);
+        setCategories([...new Set(genres)]);
       } catch (error) {
         console.error('Error fetching books:', error);
       }
@@ -49,33 +49,28 @@ const Addbook = () => {
   }, []);
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    const { target: { value } } = event;
+    setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setFileUrl(URL.createObjectURL(file)); // Set the file URL for display  
       setFileName(file.name);
     } else {
       setFileName('');
+      setFileUrl(null);
     }
   };
 
-  const getStyles = (name) => {
-    return {
-      fontWeight: personName.includes(name)
-        ? theme.typography.fontWeightMedium
-        : theme.typography.fontWeightRegular,
-    };
-  };
+  const getStyles = (name) => ({
+    fontWeight: personName.includes(name)
+      ? theme.typography.fontWeightMedium
+      : theme.typography.fontWeightRegular,
+  });
 
   const handleSubmit = () => {
-    // Validation logic
     const bookName = document.getElementById('book-name').value;
     const author = document.getElementById('author').value;
     const amount = document.getElementById('outlined-adornment-amount').value;
@@ -88,7 +83,7 @@ const Addbook = () => {
       return;
     }
 
-    // If validation passes, you can proceed with form submission logic here
+    // If validation passes  
     setSnackbarMessage('Book added successfully!');
     setSnackbarSeverity('success');
     setSnackbarOpen(true);
@@ -99,28 +94,18 @@ const Addbook = () => {
   };
 
   return (
-    <Container sx={{ backgroundColor: '#f6f6f6', marginTop: 5, borderRadius: 5, marginBottom: 5, padding: 4 }}>
+    <Container sx={{ backgroundColor: '#fff', marginTop: 5, borderRadius: 3, padding: 4, boxShadow: 3 }}>
       <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
           Add New Book
         </Typography>
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="book-name"
-            label="Name Of Book"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+          <TextField id="book-name" label="Name Of Book" fullWidth sx={{ mb: 2 }} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="author"
-            label="Author"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+          <TextField id="author" label="Author" fullWidth sx={{ mb: 2 }} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ mb: 2 }}>
@@ -129,26 +114,23 @@ const Addbook = () => {
               id="outlined-adornment-amount"
               startAdornment={<InputAdornment position="start">₹</InputAdornment>}
               label="Amount"
+              sx={{ '& .MuiOutlinedInput-notchedOutline': { borderColor: '#1976d2' } }}
             />
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel id="demo-multiple-name-label">Category</InputLabel>
-            <Select
-              labelId="demo-multiple-name-label"
+            <Select labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={personName}
               onChange={handleChange}
               input={<OutlinedInput label="Category" />}
               MenuProps={MenuProps}
+              sx={{ '& .MuiOutlinedInput-notchedOutline': { borderColor: '#1976d2' } }}
             >
               {categories.map((category) => (
-                <MenuItem
-                  key={category}
-                  value={category}
-                  style={getStyles(category)}
-                >
+                <MenuItem key={category} value={category} style={getStyles(category)}>
                   {category}
                 </MenuItem>
               ))}
@@ -156,12 +138,7 @@ const Addbook = () => {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            id="quantity"
-            label="Quantity No.s"
-            fullWidth
-            sx={{ mb: 2 }}
-          />
+          <TextField id="quantity" label="Quantity No.s" fullWidth sx={{ mb: 2 }} />
         </Grid>
         <Grid item xs={12}>
           <TextField
@@ -187,6 +164,11 @@ const Addbook = () => {
               maxWidth: 400,
               margin: 'auto',
               position: 'relative',
+              bgcolor: '#f9f9f9',
+              transition: 'background-color 0.3s',
+              '&:hover': {
+                bgcolor: '#e1f5fe',
+              },
             }}
           >
             <Typography variant="h6" gutterBottom>
@@ -200,7 +182,17 @@ const Addbook = () => {
               onChange={handleFileChange}
             />
             <label htmlFor="file-input">
-              <Button variant="contained" component="span" sx={{ marginTop: 1 }}>
+              <Button
+                variant="contained"
+                component="span"
+                sx={{
+                  marginTop: 1,
+                  bgcolor: '#1976d2',
+                  '&:hover': {
+                    bgcolor: '#1565c0',
+                  },
+                }}
+              >
                 Choose File
               </Button>
             </label>
@@ -214,14 +206,53 @@ const Addbook = () => {
                 sx={{ marginTop: 2, width: '100%' }}
               />
             )}
+            {/* Display the uploaded file */}
+            {fileUrl && (
+              <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+                {fileName.endsWith('.pdf') ? (
+                  <iframe
+                    src={fileUrl}
+                    title="Uploaded PDF"
+                    style={{ width: '100%', height: '400px', border: 'none' }}
+                  />
+                ) : (
+                  <img
+                    src={fileUrl}
+                    alt="Uploaded"
+                    style={{ width: '100%', height: 'auto', maxHeight: '400px' }}
+                  />
+                )}
+              </Box>
+            )}
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Stack direction="row" spacing={2} justifyContent="center">
-            <Button variant="contained" color="success" onClick={handleSubmit}>
+          <Stack direction="row" spacing={2} justifyContent="center" sx={{ marginTop: 4 }}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleSubmit}
+              sx={{
+                bgcolor: '#4caf50',
+                '&:hover': {
+                  bgcolor: '#388e3c',
+                },
+              }}
+            >
               Submit
             </Button>
-            <Button variant="outlined" color="error">
+            <Button
+              variant="outlined"
+              color="error"
+              sx={{
+                borderColor: '#f44336',
+                '&:hover': {
+                  bgcolor: '#f44336',
+                  color: '#fff',
+                },
+              }}
+              onClick={() => {/* Add any cancel logic here */ }}
+            >
               Cancel
             </Button>
           </Stack>
@@ -232,9 +263,10 @@ const Addbook = () => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
-        onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }} >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
@@ -243,5 +275,3 @@ const Addbook = () => {
 };
 
 export default Addbook;
-
-
