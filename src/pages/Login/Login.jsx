@@ -12,6 +12,7 @@ const LoginPage = () => {
     const [successMessage, setSuccessMessage] = useState('');  // State for success messages  
     const [openSnackbar, setOpenSnackbar] = useState(false);  
     const [isSuccess, setIsSuccess] = useState(false); // State to track if the message is success  
+    const [WelcomeMsg, SetWelcomeMsg] = useState(''); 
     const navigate = useNavigate();  
 
     const handleLogin = async (event) => {  
@@ -34,13 +35,14 @@ const LoginPage = () => {
 
         try {  
             const response = await axios.get(`https://localhost:7042/API/custlogin?mobile=${mobile}&Password=${password}`);  
-            const { status, message } = response.data;  
+            const { status, message,name  } = response.data;  
 
             if (status === 1) {  
-                setSuccessMessage(message); // Set success message  
+                SetWelcomeMsg("Welcome "+ name);
+                setSuccessMessage(SetWelcomeMsg + WelcomeMsg); // Set success message  
                 setIsSuccess(true); // Indicate this is a success message  
                 setOpenSnackbar(true);  
-                navigate('/ProductFeeds');  
+               navigate('/ProductFeeds');  
             } else {  
                 setErrorMessage(message);  
                 setIsSuccess(false);  
