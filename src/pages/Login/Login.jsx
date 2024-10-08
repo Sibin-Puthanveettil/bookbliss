@@ -6,45 +6,50 @@ import axios from 'axios'; // Import axios for API calls
 import BackkImage from './Bg.jpg';  
 
 const LoginPage = () => {  
-    const [mobile, setMobile] = useState(''); // Changed email to mobile  
+    const [mobile, setMobile] = useState('');  
     const [password, setPassword] = useState('');  
     const [errorMessage, setErrorMessage] = useState('');  
+    const [successMessage, setSuccessMessage] = useState('');  // State for success messages  
     const [openSnackbar, setOpenSnackbar] = useState(false);  
+    const [isSuccess, setIsSuccess] = useState(false); // State to track if the message is success  
     const navigate = useNavigate();  
 
     const handleLogin = async (event) => {  
         event.preventDefault();  
 
-        // Validate mobile and password  
         if (!mobile || !password) {  
             setErrorMessage("Mobile number and password are required.");  
+            setIsSuccess(false); // Make sure it's an error message  
             setOpenSnackbar(true);  
             return;  
         }  
 
-        const mobilePattern = /^[0-9]{10}$/; // Adjust pattern for mobile number  
-        if (!mobilePattern.test(mobile)) {  
-            setErrorMessage("Please enter a valid mobile number.");  
-            setOpenSnackbar(true);  
-            return;  
-        }  
+        // const mobilePattern = /^[0-9]{10}$/;  
+        // if (!mobilePattern.test(mobile)) {  
+        //     setErrorMessage("Please enter a valid mobile number.");  
+        //     setIsSuccess(false);  
+        //     setOpenSnackbar(true);  
+        //     return;  
+        // }  
 
         try {  
-            // Add your login logic here  
             const response = await axios.get(`https://localhost:7042/API/custlogin?mobile=${mobile}&Password=${password}`);  
             const { status, message } = response.data;  
 
             if (status === 1) {  
-                alert(message); // Show success message  
-                navigate('/ProductFeeds'); // Redirect to the ProductFeeds page  
+                setSuccessMessage(message); // Set success message  
+                setIsSuccess(true); // Indicate this is a success message  
+                setOpenSnackbar(true);  
+                navigate('/ProductFeeds');  
             } else {  
                 setErrorMessage(message);  
+                setIsSuccess(false);  
                 setOpenSnackbar(true);  
             }  
         } catch (error) {  
             setErrorMessage('An error occurred during login. Please try again later.');  
+            setIsSuccess(false);  
             setOpenSnackbar(true);  
-            // alert(error);
         }  
     };  
 
@@ -64,7 +69,7 @@ const LoginPage = () => {
                     marginBottom: 10,  
                     paddingBottom: 2,  
                     borderRadius: '10px',  
-                    backgroundColor: 'white' // Semi-transparent background for the form  
+                    backgroundColor: 'white'  
                 }}  
             >  
                 <Box  
@@ -87,7 +92,7 @@ const LoginPage = () => {
                             required  
                             fullWidth  
                             label="Mobile Number"  
-                            autoComplete="tel" // Set autocomplete to tel for mobile  
+                            autoComplete="tel"  
                             autoFocus  
                             value={mobile}  
                             onChange={(e) => setMobile(e.target.value)}  
@@ -124,16 +129,16 @@ const LoginPage = () => {
                     left: 0,  
                     width: '100%',  
                     height: '100%',  
-                    backgroundImage: `url(${BackkImage})`, // URL of your background image  
+                    backgroundImage: `url(${BackkImage})`,  
                     backgroundSize: 'cover',  
                     backgroundPosition: 'center',  
                     filter: 'blur(3px)',  
-                    zIndex: -999999 // Behind the container  
+                    zIndex: -999999  
                 }}  
             />  
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>  
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>  
-                    {errorMessage}  
+                <Alert onClose={handleCloseSnackbar} severity={isSuccess ? 'success' : 'error'} sx={{ width: '100%' }}>  
+                    {isSuccess ? successMessage : errorMessage}  
                 </Alert>  
             </Snackbar>  
             <Footer />  
