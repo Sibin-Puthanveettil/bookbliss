@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCartPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import BookCarousel from '../components/BookCarousel';
+import { useNavigate } from 'react-router-dom';
 const ProductFeeds = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const ProductFeeds = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [booksPerPage] = useState(8); // Number of books to display per page
     const [cart, setCart] = useState({}); // State to track added books
-
+    const navigate = useNavigate();
     const languages = [
         'English', 'Hindi', 'Bengali', 'Marathi', 'Tamil', 'Telugu',
         'Gujarati', 'Malayalam', 'Kannada', 'Odia', 'Punjabi', 'Assamese',
@@ -62,6 +63,7 @@ const ProductFeeds = () => {
     };
 
     const handleAddClick = (book) => {
+        navigate('/login');
         setCart((prevCart) => ({
             ...prevCart,
             [book.id]: !prevCart[book.id], // Toggle the added state
@@ -114,7 +116,7 @@ const ProductFeeds = () => {
                                     <FontAwesomeIcon icon={faShoppingCart} style={styles.icon} /> Purchase
                                 </button>
                                 <button style={styles.button} onClick={() => handleAddClick(book)}>
-                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon} /> {cart[book.id] ? 'Added' : 'Add'}
+                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon}  /> {cart[book.id] ? 'Added' : 'Add'}
                                 </button>
                             </div>
                         </div>
