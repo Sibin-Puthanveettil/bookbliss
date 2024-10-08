@@ -85,7 +85,7 @@ const Cart = () => {
                   <Box key={item.id} sx={{ mb: 2, borderBottom: '1px solid #ccc', pb: 2 }}>
                     <Grid container alignItems="center" spacing={2}>
                       <Grid item xs={4}>
-                        <img src={item.image} alt={item.title} width={100} style={{ borderRadius: '8px' }} />
+                        <img src={'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={item.title} width={100} style={{ borderRadius: '8px' }} />
                       </Grid>
                       <Grid item xs={5}>
                         <Typography variant="body1" sx={{ fontWeight: 'bold' }}>

@@ -112,7 +112,7 @@ const ProductFeeds = () => {
                                 <button style={styles.button} onClick={() => handleReadClick(book)}>
                                     <FontAwesomeIcon icon={faBook} style={styles.icon} /> Read
                                 </button>
-                                <button style={styles.button}>
+                                <button style={styles.button} onClick={() => navigate('/cart')}>
                                     <FontAwesomeIcon icon={faShoppingCart} style={styles.icon} /> Purchase
                                 </button>
                                 <button style={styles.button} onClick={() => handleAddClick(book)}>
