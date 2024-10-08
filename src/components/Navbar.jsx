@@ -20,7 +20,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import { useNavigate } from 'react-router-dom';
 import sitelogo from '../LOGO 2.png';  // Logo import  
-
+import LoginIcon from '@mui/icons-material/Login';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -134,12 +134,12 @@ const PrimarySearchAppBar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
-      <MenuItem onClick={() => navigate('/login')}>Login</MenuItem>
-      <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
       <MenuItem onClick={() => navigate('/cart')}>Cart</MenuItem>
       <MenuItem onClick={() => navigate('/Orders')}>Orders</MenuItem>
       {/* <MenuItem onClick={() => navigate('/addbook')}>Add Book</MenuItem> */}
       <MenuItem onClick={() => navigate('/Admin')}>Admin</MenuItem>
+      <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
+      <MenuItem onClick={() => navigate('/login')}>Logout</MenuItem>
     </Menu>
   );
 
@@ -289,6 +289,14 @@ const PrimarySearchAppBar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton
+              size="large"
+              aria-label="login"
+              color="inherit"
+              onClick={() => navigate('/login')}
+            >
+              <LoginIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="show new notifications"

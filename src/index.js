@@ -122,6 +122,14 @@ const router = createBrowserRouter([
       <Categories />
       <Footer /></div>,
   },
+
+  {
+    path: "/ProductFeeds",
+    element: <div><Navbar />
+     <Banner />
+      <ProductFeeds />
+      <Footer /></div>,
+  },
 ]);
 
 
