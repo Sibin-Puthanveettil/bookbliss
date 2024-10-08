@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCartPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-
+import BookCarousel from '../components/BookCarousel';
 const ProductFeeds = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -89,8 +89,10 @@ const ProductFeeds = () => {
                     ))}
                 </div>
             </div>
-            {selectedLanguage && ( <h4 style={styles.SelectLang}> SELECTED LANGUAGE : {selectedLanguage.toUpperCase()}</h4>
+            {selectedLanguage && (<h4 style={styles.SelectLang}> SELECTED LANGUAGE : {selectedLanguage.toUpperCase()}</h4>
             )}
+
+            <BookCarousel/>
             <div style={styles.gallery}>
                 {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>

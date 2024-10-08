@@ -21,6 +21,7 @@ import OrdersTracking from './pages/Orders/OrdersTracking'
 import Admin from './pages/Admin/Admin';
 import LanguagePage from './pages/Admin/LanguagePage';
 import Categories from './pages/Admin/Categories';
+import Info from './components/Info';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-
+        {/* <Info /> */}
         <Banner />
         {/* <ProductGallery/> */}
         {/* <BookCarousel /> */}
