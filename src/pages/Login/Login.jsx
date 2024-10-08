@@ -44,7 +44,7 @@ const LoginPage = () => {
         } catch (error) {  
             setErrorMessage('An error occurred during login. Please try again later.');  
             setOpenSnackbar(true);  
-           
+            // alert(error);
         }  
     };  
 
