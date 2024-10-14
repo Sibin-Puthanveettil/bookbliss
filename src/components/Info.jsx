@@ -1,119 +1,95 @@
 import React from 'react';  
+import clip1 from '../images/c4.png';  
+import clip2 from '../images/clip1.png';  
+import clip3 from '../images/c6.png';  
+
+const Info = () => {  
+  return (  
+    <div style={styles.container}>  
+      <Box   
+        title="Read"   
+        description="Discover thousands of stories, poems, articles, magazines, novels, essays, etc for free. Read popular genres. Save your favourites in your own library. Contents present in the Pratilipi library are filled with endless emotions, thoughts, verses, and possibilities."   
+        src={clip1}  
+      />  
+      <Box   
+        title="Write"   
+        description="Self-publish on Pratilipi and join the largest community of writers. Create new drafts, add images and publish right from the app. Pratilipi provides a hassle free and advanced writer panel to make your act of writing a little less scary and a whole lot comforting."   
+        src={clip2}  
+      />  
+      <Box   
+        title="Get Involved"   
+        description="Pratilipi brings writers and readers on a single platform. Follow authors to see what they are publishing next, review and discuss. Share your favourites with your fellow readers. Here writers can interact directly with readers and readers can often evolve into writers."   
+        src={clip3}  
+      />  
+    </div>  
+  );  
+};  
+
+const Box = ({ title, description, src }) => {  
+  return (  
+    <div style={styles.box}>  
+      <img style={styles.clipart} src={src} alt="Clipart" />  
+      <h2 style={styles.infoTitle}>{title}</h2>  
+      <p style={styles.infoDescription}>{description}</p>  
+    </div>  
+  );  
+};  
+
+const styles = {  
+  container: {  
+    display: 'flex',  
+    justifyContent: 'space-between',  
+    padding: '20px',  
+  },  
+  box: {  
+    backgroundColor: '#f2f4f8',  
+    borderRadius: '8px',  
+    padding: '20px',  
+    margin: '0 10px',  
+    width: '30%',  
+    textAlign: 'center',  
+    cursor: 'pointer',  
+    transition: 'transform 0.3s ease',  
+    display: 'flex', // Use flexbox for alignment  
+    flexDirection: 'column', // Stack children vertically  
+    alignItems: 'center', // Center horizontally  
+    justifyContent: 'space-between', // Space between children  
+  },  
+  clipart: {  
+    width: '160px',  // Set a consistent width for images  
+    height: '175px', // Set a consistent height for images  
+    marginBottom: '10px',  
+    objectFit: 'cover', // Maintain aspect ratio and cover the area  
+  },  
+  infoTitle: {  
+    fontSize: '18px', // Consistent font size  
+    fontWeight: 'bold',  
+    color: '#333',  
+  },  
+  infoDescription: {  
+    fontSize: '14px', // Consistent font size  
+    color: '#666',  
+  },  
+};  
+
+// Global CSS for hover animation  
+const stylesAnimation = `  
+.box:hover {  
+  transform: scale(1.05); /* Scale up the entire box on hover */  
+}  
+`;  
+
+const GlobalStyle = () => {  
+  return <style>{stylesAnimation}</style>;  
+};  
 
 const App = () => {  
-    const books = [  
-        {  
-            title: "Book Title 1",  
-            description: "This is a brief description of Book Title 1.",  
-            image: "https://via.placeholder.com/300" // Placeholder image URL  
-        },  
-        {  
-            title: "Book Title 2",  
-            description: "This is a brief description of Book Title 2.",  
-            image: "https://via.placeholder.com/300"  
-        },  
-        {  
-            title: "Book Title 3",  
-            description: "This is a brief description of Book Title 3.",  
-            image: "https://via.placeholder.com/300"  
-        },  
-        {  
-            title: "Book Title 4",  
-            description: "This is a brief description of Book Title 4.",  
-            image: "https://via.placeholder.com/300"  
-        },  
-    ];  
-
-    return (  
-        <div style={styles.app}>  
-            <h1 style={styles.title}>Book Information</h1>  
-            {books.map((book, index) => (  
-                <div   
-                    key={index}   
-                    style={{   
-                        ...styles.bookItem,   
-                        flexDirection: index % 2 === 0 ? 'row' : 'row-reverse'   
-                    }}  
-                    onMouseEnter={e => e.currentTarget.style.boxShadow = styles.bookItemHover.boxShadow}  
-                    onMouseLeave={e => e.currentTarget.style.boxShadow = styles.bookItem.boxShadow}  
-                >  
-                    <div style={styles.bookText}>  
-                        <h2 style={styles.bookTitle}>{book.title}</h2>  
-                        <p>{book.description}</p>  
-                    </div>  
-                    <div style={styles.bookImage}>  
-                        <img src={'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={book.title} style={styles.image} />  
-                    </div>  
-                </div>  
-            ))}  
-        </div>  
-    );  
+  return (  
+    <div>  
+      <GlobalStyle />  
+      <Info />  
+    </div>  
+  );  
 };  
 
-// Styles  
-const styles = {  
-    app: {  
-        fontFamily: 'Arial, sans-serif',  
-        margin: 0,  
-        padding: '20px',  
-        backgroundColor: '#f5f5f5',  
-        maxWidth: '100%', // Make it full width  
-        boxSizing: 'border-box',  
-    },  
-    title: {  
-        textAlign: 'center',  
-        color: '#333',  
-        marginBottom: '30px',  
-        fontSize: '2.5rem',  
-    },  
-    bookItem: {  
-        display: 'flex',  
-        alignItems: 'center',  
-        margin: '20px 0',  
-        backgroundColor: '#fff',  
-        border: '1px solid #e0e0e0',  
-        borderRadius: '8px',  
-        overflow: 'hidden',  
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',  
-        transition: 'box-shadow 0.3s ease',  
-    },  
-    bookItemHover: {  
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',  
-    },  
-    bookText: {  
-        flex: 1,  
-        padding: '20px',  
-        transition: 'transform 0.3s ease',  
-    },  
-    bookTitle: {  
-        margin: '0 0 10px 0',  
-        color: '#007BFF', // Add a color to the title  
-    },  
-    bookImage: {  
-        maxWidth: '150px',  
-        borderRadius: '0 8px 8px 0',  
-    },  
-    image: {  
-        width: '100%', // Responsive image  
-        height: 'auto',  
-        borderRadius: '8px',  
-        transition: 'transform 0.3s ease',  
-    },  
-};  
-
-// Adding hover scale effect on image  
-const handleMouseEnterImage = (e) => {  
-    e.currentTarget.style.transform = 'scale(1.1)';  
-}  
-
-const handleMouseLeaveImage = (e) => {  
-    e.currentTarget.style.transform = 'scale(1)';  
-}  
-
-export default function Root() {  
-    return (  
-        <div>  
-            <App />  
-        </div>  
-    );  
-}
+export default App;

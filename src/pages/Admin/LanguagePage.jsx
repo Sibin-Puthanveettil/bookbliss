@@ -50,7 +50,7 @@ const LanguagePage = () => {
 
         try {
             // Make API call to add the language using Axios
-            const response = await axios.post(`https://localhost:7042/API/AddLanguage?languageName=${selectedLanguage}`);
+            const response = await axios.post(`https://localhost:44302/API/AddLanguage?languageName=${selectedLanguage}`);
             console.log(response);
             if (response.data.status === 1) {
                 // Add the selected language to the list

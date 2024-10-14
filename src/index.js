@@ -35,8 +35,8 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-        {/* <Info /> */}
-        <Banner />
+        
+        <Banner /><Info />
         {/* <ProductGallery/> */}
         {/* <BookCarousel /> */}
 

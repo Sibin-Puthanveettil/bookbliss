@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCartPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import BookCarousel from '../components/BookCarousel';
 import { useNavigate } from 'react-router-dom';
+import  Banner from '../components/Banner';
+import  Info from '../components/Info';
+
 const ProductFeeds = () => {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -74,7 +77,10 @@ const ProductFeeds = () => {
     if (error) return <p style={styles.errorText}>{error}</p>;
 
     return (
+        
         <div style={styles.container}>
+             <Banner />
+             <Info/>
             {/* <h1 style={styles.title}>Unleash Your Imagination: Experience Book of the Day</h1> */}
 
             {/* Language Buttons */}

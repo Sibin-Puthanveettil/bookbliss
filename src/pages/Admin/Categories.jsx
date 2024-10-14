@@ -17,10 +17,10 @@ const Categories = () => {
             setSnackbarOpen(true);
             return;
         }
-
+        
         try {
             // Make API call to add the category using Axios
-            const response = await axios.post(`https://localhost:7042/API/Addcategory?categoryname=${category}`);
+            const response = await axios.post(`https://localhost:44302/API/Addcategory?categoryname=${category}`);
 
             if (response.data.status === 1) {
                 setSnackbarMessage(`Category added: ${category}`);

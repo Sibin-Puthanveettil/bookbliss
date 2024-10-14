@@ -19,7 +19,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import { useNavigate } from 'react-router-dom';
-import sitelogo from '../LOGO 2.png';  // Logo import  
+import sitelogo from '../Picture1.png';  // Logo import  
 import LoginIcon from '@mui/icons-material/Login';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -210,11 +210,12 @@ const PrimarySearchAppBar = () => {
     <Box
       sx={{
         width: 250,
-        backgroundColor: '#4e125e', // Main sidebar background  
-        color: '#FFFFFF',
+        backgroundColor: '#5b2f2f00', // Semi-transparent white background  
+        color: 'black',
         display: 'flex',
         flexDirection: 'column',
         boxShadow: '2px 0 5px rgba(0,0,0,0.5)',
+        backdropFilter: 'blur(8px)', // Apply blur effect  
         padding: 0,
       }}
       role="presentation"
@@ -222,19 +223,6 @@ const PrimarySearchAppBar = () => {
       onKeyDown={handleDrawerClose}
     >
       <List>
-        <ListSubheader
-          sx={{
-            backgroundColor: '#4e125e', // Darker background color for the header  
-            color: 'white', // Attractive text color  
-            fontWeight: 'bold',
-            textAlign: 'center', // Center the header text  
-            fontSize: '1.25rem', // Larger font size  
-            padding: '16px 0', // Add padding for spacing  
-          }}
-        >
-          Book Categories
-        </ListSubheader>
-
         {["Home", "Fiction", "Non-Fiction", "Children's Books", "Mystery", "Science Fiction", "Fantasy", "Graphic Novels", "Others",
           "Historical Fiction", "Biography", "Poetry", "Cookbooks", "Self-Help", "Travel", "True Crime", "Comics",
           "Classic Literature", "Anthology", "Products", "About", "Contact"].map(item => (
@@ -244,8 +232,8 @@ const PrimarySearchAppBar = () => {
               sx={{
                 cursor: 'pointer',
                 '&:hover': {
-                  backgroundColor: 'E5CCFF', // Dark background on hover  
-                  color: '#FFFFFF', // Keep text color white for contrast  
+                  backgroundColor: 'rgba(229, 204, 255, 0.6)', // Subtle hover effect with transparency  
+                  color: '#FFFFFF',
                 },
               }}
             >
@@ -257,16 +245,16 @@ const PrimarySearchAppBar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#8c29a6' }} elevation={0}>
-        <Toolbar>
+    <Box sx={{ flexGrow: 1, color: 'white', }}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent ! important', color: 'white' }} elevation={0}>
+        <Toolbar sx={{ backgroundColor: 'transparent ! important', color: 'white' }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, color: '#2d1819', backgroundColor: 'transparent ! important' }}
           >
             <MenuIcon />
           </IconButton>
@@ -278,7 +266,7 @@ const PrimarySearchAppBar = () => {
           >
             <img src={sitelogo} onClick={() => navigate('/')} width={200} alt="Site Logo" />
           </Typography>
-          <Search>
+          <Search sx={{ color: '#2d1819', backgroundColor: '#8080800f' }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -289,7 +277,7 @@ const PrimarySearchAppBar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
+            <IconButton sx={{ color: '#2d1819' }}
               size="large"
               aria-label="login"
               color="inherit"
@@ -297,7 +285,7 @@ const PrimarySearchAppBar = () => {
             >
               <LoginIcon />
             </IconButton>
-            <IconButton
+            <IconButton sx={{ color: '#2d1819' }}
               size="large"
               aria-label="show new notifications"
               color="inherit"
@@ -307,7 +295,7 @@ const PrimarySearchAppBar = () => {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
+            <IconButton sx={{ color: '#2d1819' }}
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -328,7 +316,7 @@ const PrimarySearchAppBar = () => {
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
+            <IconButton sx={{ color: '#2d1819' }}
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
