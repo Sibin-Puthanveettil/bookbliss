@@ -21,6 +21,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import { useNavigate } from 'react-router-dom';
 import sitelogo from '../Picture1.png';  // Logo import  
 import LoginIcon from '@mui/icons-material/Login';
+import '../../src/App.css';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -210,12 +211,11 @@ const PrimarySearchAppBar = () => {
     <Box
       sx={{
         width: 250,
-        backgroundColor: '#5b2f2f00', // Semi-transparent white background  
-        color: 'black',
+        backgroundColor: 'transparent', // Semi-transparent white background  
+        color: 'white',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '2px 0 5px rgba(0,0,0,0.5)',
-        backdropFilter: 'blur(8px)', // Apply blur effect  
+
         padding: 0,
       }}
       role="presentation"
@@ -332,7 +332,7 @@ const PrimarySearchAppBar = () => {
       {renderMobileMenu}
       {renderMenu}
       {renderNotificationMenu}
-      <Drawer open={drawerOpen} onClose={handleDrawerClose}>
+      <Drawer open={drawerOpen} onClose={handleDrawerClose} >
         {sidebarList()}
       </Drawer>
     </Box>

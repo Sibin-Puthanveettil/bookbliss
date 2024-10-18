@@ -18,17 +18,13 @@ const ProductFeeds = () => {
     const [booksPerPage] = useState(8); // Number of books to display per page
     const [cart, setCart] = useState({}); // State to track added books
     const navigate = useNavigate();
-    const languages = [
-        'English', 'Hindi', 'Bengali', 'Marathi', 'Tamil', 'Telugu',
-        'Gujarati', 'Malayalam', 'Kannada', 'Odia', 'Punjabi', 'Assamese',
-        'Maithili', 'Urdu', 'Manipuri', 'Dogri', 'Sanskrit', 'Santali',
-        'Konkani', 'Nepali', 'Bodo', 'Sindhi', 'Rajasthani', 'Marwari'
-    ];
-
+    const [languages, setLanguages] = useState([]);  
+   
     useEffect(() => {
         const fetchBooks = async () => {
             try {
-                const response = await axios.get('https://freetestapi.com/api/v1/books');
+                const response = await axios.get('https://localhost:44302/API/Getproductdata');
+                console.log(response.data);
                 setBooks(response.data);
             } catch (err) {
                 setError('Failed to fetch books');
@@ -39,6 +35,27 @@ const ProductFeeds = () => {
 
         fetchBooks();
     }, []);
+
+
+    useEffect(() => {  
+        const fetchLanguages = async () => {  
+          try {  
+            const response = await axios.get('https://localhost:44302/API/GetLanguage');  
+            // Check if response exists and is an array  
+            if (Array.isArray(response.data)) {  
+              // Extract language names  
+              const languageNames = response.data.map(language => language.languageName);  
+              setLanguages(languageNames); // Update state with language names  
+            } else {  
+              console.warn("Unexpected response format:", response.data);  
+            }  
+          } catch (error) {  
+            console.error('Error fetching languages:', error);  
+          }  
+        };  
+    
+        fetchLanguages(); // Call the function to fetch languages  
+      }, []); // Empty dependency array to run only once on mount  
 
     const handleLanguageSelect = (language) => {
         setSelectedLanguage(language);
@@ -79,8 +96,7 @@ const ProductFeeds = () => {
     return (
         
         <div style={styles.container}>
-             <Banner />
-             <Info/>
+             
             {/* <h1 style={styles.title}>Unleash Your Imagination: Experience Book of the Day</h1> */}
 
             {/* Language Buttons */}
@@ -104,14 +120,14 @@ const ProductFeeds = () => {
             <div style={styles.gallery}>
                 {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>
-                        <img src={book.imageurl || 'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={book.title} style={styles.bookImage} loading='lazy' />
+                        <img src={book.doctype + "," + book.img || 'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={book.name} style={styles.bookImage} loading='lazy' />
                         <div style={styles.bookInfo}>
-                            <h3 style={styles.bookTitle}>{book.title}</h3>
+                            <h3 style={styles.bookTitle}>{book.name}</h3>
                             <p style={styles.author}>by {book.author}</p>
-                            <p style={styles.year}>Published: {book.publication_year}</p>
+                            {/* <p style={styles.year}>Published: {book.id}</p> */}
                             <p style={styles.description}>{book.description}</p>
-                            <p style={styles.genres}>Genres: {book.genre.join(', ')}</p>
-                            <p style={styles.price}>₹ 299 /- {book.price}</p>
+                            <p style={styles.genres}>Genres: {book.category}</p>
+                            <p style={styles.price}>₹ {book.price}</p>
 
                             {/* Action buttons */}
                             <div style={styles.buttonContainer}>
@@ -151,8 +167,9 @@ const ProductFeeds = () => {
                 <div style={styles.modalOverlay}>
                     <div style={styles.modalContent}>
                         <button style={styles.closeButton} onClick={handleCloseModal}>X</button>
+                        <h2 style={styles.bookTitle}>Please Purchase at  ₹ {selectedBook.price} for Full version of {selectedBook.name}</h2>
                         <iframe
-                            src={'https://english.pratilipi.com/read/my-brother-ki-dulhan-my-brother-ki-dulhan-qpijgp9qgsww-g785688b193y44n?redirectTo=%2Fseries%2Fmy-brother-ki-dulhan-completed-by-s-d-otsix63fzh0f'} // Assuming each book has a `read_url` field  
+                            src={selectedBook.doctype + "," + selectedBook.img } // Assuming each book has a `read_url` field  
                             title={selectedBook.title}
                             style={styles.iframe}
                         />
@@ -229,7 +246,7 @@ const styles = {
     },
     bookImage: {
         width: '100%',
-        height: 'auto',
+        height: '350px',
         borderBottom: '2px solid #eaeaea',
     },
     bookInfo: {
