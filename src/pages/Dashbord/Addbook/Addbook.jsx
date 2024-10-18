@@ -87,7 +87,7 @@ const Addbook = () => {
       name: bookData.name,
       description: bookData.description,
       price: parseFloat(bookData.price),
-      category: bookData.category.join(', '),
+      category: bookData.category,
       author: bookData.author,
       qnt: bookData.qnt,
       language: bookData.language,

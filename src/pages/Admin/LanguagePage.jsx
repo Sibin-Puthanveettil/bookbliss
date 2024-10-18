@@ -92,7 +92,7 @@ const LanguagePage = () => {
 
     return (  
         <div style={styles.languagePage}>  
-            <h1 style={styles.header}>Create a New Language</h1>  
+            <h1 style={styles.header}>Add a New Language</h1>  
             <div style={styles.warningContainer}>  
                 <div style={styles.marquee}>  
                     <span style={styles.warningText}>  
