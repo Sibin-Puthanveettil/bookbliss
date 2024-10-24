@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCartPlus, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import BookCarousel from '../components/BookCarousel';
 import { useNavigate } from 'react-router-dom';
-import  Banner from '../components/Banner';
-import  Info from '../components/Info';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { height } from '@mui/system';
 
 const ProductFeeds = () => {
     const [books, setBooks] = useState([]);
@@ -15,17 +16,17 @@ const ProductFeeds = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [booksPerPage] = useState(8); // Number of books to display per page
-    const [cart, setCart] = useState({}); // State to track added books
+    const [booksPerPage] = useState(8);
+    const [cart, setCart] = useState({});
     const navigate = useNavigate();
-    const [languages, setLanguages] = useState([]);  
-   
+    const [languages, setLanguages] = useState([]);
+
     useEffect(() => {
         const fetchBooks = async () => {
             try {
                 const response = await axios.get('https://localhost:44302/API/Getproductdata');
-                console.log(response.data);
                 setBooks(response.data);
+                console.log(response.data);
             } catch (err) {
                 setError('Failed to fetch books');
             } finally {
@@ -36,35 +37,38 @@ const ProductFeeds = () => {
         fetchBooks();
     }, []);
 
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            try {
+                const response = await axios.get('https://localhost:44302/API/GetLanguage');
+                if (Array.isArray(response.data)) {
+                    const languageNames = response.data.map(language => language.languageName);
+                    setLanguages(languageNames);
+                } else {
+                    console.warn("Unexpected response format:", response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching languages:', error);
+            }
+        };
 
-    useEffect(() => {  
-        const fetchLanguages = async () => {  
-          try {  
-            const response = await axios.get('https://localhost:44302/API/GetLanguage');  
-            // Check if response exists and is an array  
-            if (Array.isArray(response.data)) {  
-              // Extract language names  
-              const languageNames = response.data.map(language => language.languageName);  
-              setLanguages(languageNames); // Update state with language names  
-            } else {  
-              console.warn("Unexpected response format:", response.data);  
-            }  
-          } catch (error) {  
-            console.error('Error fetching languages:', error);  
-          }  
-        };  
-    
-        fetchLanguages(); // Call the function to fetch languages  
-      }, []); // Empty dependency array to run only once on mount  
+        fetchLanguages();
+    }, []);
 
     const handleLanguageSelect = (language) => {
         setSelectedLanguage(language);
-        console.log('Selected Language:', language);
     };
 
     const handleReadClick = (book) => {
-        setSelectedBook(book);
-        setIsModalOpen(true);
+        const customerData = localStorage.getItem('customerData');
+        if (customerData!=null) {
+            setSelectedBook(book);
+            setIsModalOpen(true);
+
+        } else {
+            toast.error('Please log in to Read Sample Book.');
+            // navigate('/login');
+        }
     };
 
     const handleCloseModal = () => {
@@ -72,7 +76,6 @@ const ProductFeeds = () => {
         setSelectedBook(null);
     };
 
-    // Pagination logic
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
     const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
@@ -83,23 +86,25 @@ const ProductFeeds = () => {
     };
 
     const handleAddClick = (book) => {
-        navigate('/login');
-        setCart((prevCart) => ({
-            ...prevCart,
-            [book.id]: !prevCart[book.id], // Toggle the added state
-        }));
+        const customerData = localStorage.getItem('customerData');
+        console.log(customerData, "customerData");
+        if (customerData!=null) {  
+            setCart((prevCart) => ({
+                ...prevCart,
+                [book.id]: !prevCart[book.id],
+            }));
+            toast.success('Book added to cart!');
+        } else {
+            toast.error('Please log in to add items to your cart.');
+            navigate('/login');
+        }
     };
 
-    if (loading) return <p style={styles.loadingText}>Loading...</p>;
-    if (error) return <p style={styles.errorText}>{error}</p>;
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
-        
         <div style={styles.container}>
-             
-            {/* <h1 style={styles.title}>Unleash Your Imagination: Experience Book of the Day</h1> */}
-
-            {/* Language Buttons */}
             <div style={styles.languageButtonContainer}>
                 <div style={styles.languageButtonWrapper}>
                     {languages.map((language) => (
@@ -113,10 +118,11 @@ const ProductFeeds = () => {
                     ))}
                 </div>
             </div>
-            {selectedLanguage && (<h4 style={styles.SelectLang}> SELECTED LANGUAGE : {selectedLanguage.toUpperCase()}</h4>
+            {selectedLanguage && (
+                <h4 style={styles.SelectLang}> SELECTED LANGUAGE : {selectedLanguage.toUpperCase()}</h4>
             )}
 
-            <BookCarousel/>
+            <BookCarousel />
             <div style={styles.gallery}>
                 {currentBooks.map((book) => (
                     <div key={book.id} style={styles.bookCard}>
@@ -124,9 +130,9 @@ const ProductFeeds = () => {
                         <div style={styles.bookInfo}>
                             <h3 style={styles.bookTitle}>{book.name}</h3>
                             <p style={styles.author}>by {book.author}</p>
-                            {/* <p style={styles.year}>Published: {book.id}</p> */}
                             <p style={styles.description}>{book.description}</p>
                             <p style={styles.genres}>Genres: {book.category}</p>
+                            <p style={styles.genres}>language: {book.language}</p>
                             <p style={styles.price}>₹ {book.price}</p>
 
                             {/* Action buttons */}
@@ -134,11 +140,22 @@ const ProductFeeds = () => {
                                 <button style={styles.button} onClick={() => handleReadClick(book)}>
                                     <FontAwesomeIcon icon={faBook} style={styles.icon} /> Read
                                 </button>
-                                <button style={styles.button} onClick={() => navigate('/cart')}>
+                                <button
+                                    style={styles.button}
+                                    onClick={() => {
+                                        const customerData = localStorage.getItem('customerData');
+                                        if (customerData!=null) {
+                                            navigate('/cart');
+                                        } else {
+                                            toast.error('Please log in to make a purchase.');
+                                            navigate('/login');
+                                        }
+                                    }}
+                                >
                                     <FontAwesomeIcon icon={faShoppingCart} style={styles.icon} /> Purchase
                                 </button>
                                 <button style={styles.button} onClick={() => handleAddClick(book)}>
-                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon}  /> {cart[book.id] ? 'Added' : 'Add'}
+                                    <FontAwesomeIcon icon={faCartPlus} style={styles.icon} /> {cart[book.id] ? 'Added' : 'Add'}
                                 </button>
                             </div>
                         </div>
@@ -164,18 +181,32 @@ const ProductFeeds = () => {
 
             {/* Modal for iframe viewer */}
             {isModalOpen && selectedBook && (
+               
                 <div style={styles.modalOverlay}>
                     <div style={styles.modalContent}>
                         <button style={styles.closeButton} onClick={handleCloseModal}>X</button>
-                        <h2 style={styles.bookTitle}>Please Purchase at  ₹ {selectedBook.price} for Full version of {selectedBook.name}</h2>
+                        <h2 style={styles.bookTitle}>Please Purchase at ₹ {selectedBook.price} for Full version of {selectedBook.name}</h2>
                         <iframe
-                            src={selectedBook.doctype + "," + selectedBook.img } // Assuming each book has a `read_url` field  
+                            src={selectedBook.doctypeDoc + "," + selectedBook.doc} // Assuming each book has a `read_url` field  
                             title={selectedBook.title}
                             style={styles.iframe}
                         />
                     </div>
                 </div>
             )}
+
+            {/* Toast Container for notifications */}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 };
@@ -184,19 +215,6 @@ const styles = {
     container: {
         padding: '20px',
         backgroundColor: '#f9f9f9',
-    },
-    title: {
-        fontSize: '2em',
-        marginBottom: '20px',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        color: '#ffffff',
-        background: 'linear-gradient(90deg, #6a0dad, #9c27b0)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        letterSpacing: '2px',
-        textTransform: 'uppercase',
-        padding: '10px 0',
     },
     languageButtonContainer: {
         whiteSpace: 'nowrap',
@@ -243,6 +261,7 @@ const styles = {
         position: 'relative',
         padding: '10px',
         cursor: 'pointer',
+       
     },
     bookImage: {
         width: '100%',
@@ -251,6 +270,7 @@ const styles = {
     },
     bookInfo: {
         padding: '10px',
+       
     },
     bookTitle: {
         fontSize: '1em',
@@ -268,10 +288,6 @@ const styles = {
         fontSize: '1em',
         color: '#555',
         margin: '5px 0',
-    },
-    year: {
-        fontSize: '0.9em',
-        color: '#777',
     },
     description: {
         fontSize: '0.85em',

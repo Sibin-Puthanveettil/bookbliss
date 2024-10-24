@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+// Styled components (same as before)
 const ProfileContainer = styled.div`  
   display: flex;  
   flex-direction: column;  
@@ -99,23 +100,22 @@ const Email = styled.p`
 `;
 
 const AccountAgeBadge = styled.span`  
-  background: linear-gradient(145deg, #ee950b, #e4c600); /* A gradient for the gold effect */  
+  background: linear-gradient(145deg, #ee950b, #e4c600);  
   color: white;  
   padding: 5px 10px;  
   border-radius: 12px;  
   font-size: 14px;  
   font-weight: bold;  
   margin-top: 8px;  
-  width: 100px; /* Set width to 65px */
-  box-shadow: 4px 4px 8px rgba(255, 239, 128, 0.6); /* Increased shadow effect */  
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Center items vertically */
+  width: 100px;  
+  box-shadow: 4px 4px 8px rgba(255, 239, 128, 0.6);  
+  display: flex;  
+  align-items: center;  
 `;
+
 const BadgeSymbol = styled.span`
-  margin-right: 5px; /* Space between the symbol and text */
+  margin-right: 5px;  
 `;
-
-
 
 const Button = styled.button`  
   background-color: #4a90e2;  
@@ -151,8 +151,8 @@ const Section = styled.div`
 
 const SectionTitle = styled.h3`  
   font-size: 24px;  
-  font-weight: bold;
-    color: #4a90e2;  
+  font-weight: bold;  
+  color: #4a90e2;  
   margin-bottom: 8px;  
 `;
 
@@ -246,13 +246,29 @@ const ModalButton = styled.button`
 
   &:active {  
     transform: translateY(1px);  
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);  
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);  
   }  
 `;
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
+  const [customerName, setCustomerName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    // Retrieve customer data from local storage
+    const customerData = localStorage.getItem('customerData');
+    if (customerData) {
+      const { customerName, mobileNumber } = JSON.parse(customerData);
+      setCustomerName(customerName);
+      setPhone(mobileNumber);
+      setEmail(''); // Set a default email or retrieve from another source if available
+      setAddress(''); // Set a default address or retrieve from another source if available
+    }
+  }, []);
 
   const handleEditProfile = () => {
     setShowModal(true);
@@ -272,7 +288,7 @@ const ProfilePage = () => {
         <ProfileHeader>
           <AvatarContainer>
             <Avatar
-              src={avatarFile ? URL.createObjectURL(avatarFile) : "https://img.freepik.com/premium-photo/beautiful-anime-woman-passport-size-pic_685680-483.jpg"}
+              src={avatarFile ? URL.createObjectURL(avatarFile) : "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"}
               alt="Profile Avatar"
             />
             <AvatarOverlay>
@@ -286,29 +302,27 @@ const ProfilePage = () => {
             </AvatarOverlay>
           </AvatarContainer>
           <NameAndDetailsContainer>
-            <Name>Jacquline Fernandez</Name>
-            <Email>Jacquline@hotmail.com</Email>
-          
+            <Name>{customerName || "User Name"}</Name>
+            <Email>{email || "user@example.com"}</Email>
             <Button onClick={handleEditProfile}>Edit Profile</Button>
-           
           </NameAndDetailsContainer>
         </ProfileHeader>
         <AccountAgeBadge>
-    <BadgeSymbol>★</BadgeSymbol> {/* Badge symbol */}
-    Gold User
-  </AccountAgeBadge>
+          <BadgeSymbol>★</BadgeSymbol> {/* Badge symbol */}
+          Gold User
+        </AccountAgeBadge>
         <Section>
           <SectionTitle>About</SectionTitle>
           <p>
-           3+ years valuable members, purchased more than 50 books !!!
+            3+ years valuable member, purchased more than 50 books !!!
           </p>
         </Section>
         <Section>
           <SectionTitle>Contact</SectionTitle>
           <p>
-            Phone: +91 9876543210
+            Phone: {phone || "+91 9876543210"}
             <br />
-            Address: 123 Main St, Anytown USA
+            Address: {address || "123 Main St, Anytown USA"}
           </p>
         </Section>
       </ProfileCard>
@@ -318,15 +332,15 @@ const ProfilePage = () => {
             <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
             <ModalTitle>Edit Profile</ModalTitle>
             <ModalForm>
-              <ModalInput type="text" id="name" name="name" defaultValue="PRAVEEN R" />
-              <ModalInput type="email" id="email" name="email" defaultValue="praveen@gmail.com" />
+              <ModalInput type="text" id="name" name="name" defaultValue={customerName} />
+              <ModalInput type="email" id="email" name="email" defaultValue={email} />
               <ModalTextarea
                 id="about"
                 name="about"
                 defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut risus in augue luctus venenatis."
               />
-              <ModalInput type="tel" id="phone" name="phone" defaultValue="123-456-7890" />
-              <ModalInput type="text" id="address" name="address" defaultValue="123 Main St, Anytown USA" />
+              <ModalInput type="tel" id="phone" name="phone" defaultValue={phone} />
+              <ModalInput type="text" id="address" name="address" defaultValue={address} />
               <ModalButton type="submit">Save Changes</ModalButton>
             </ModalForm>
           </ModalContent>
@@ -337,3 +351,5 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+

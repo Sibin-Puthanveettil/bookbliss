@@ -4,9 +4,9 @@ const Banner = () => {
   return (
     <div style={styles.banner}>
       <h2 style={styles.typingAnimation}>Books Bliss is India's largest digital platform connecting readers and writers in Multi Indian languages</h2>
-      <img 
-        src="https://www.prayananimation.com/childrens-book/showreel/img/Banner.webp" 
-        alt="Banner" 
+      <img
+        src="https://www.prayananimation.com/childrens-book/showreel/img/Banner.webp"
+        alt="Banner"
         style={styles.image} // Makes the image responsive
       />
     </div>

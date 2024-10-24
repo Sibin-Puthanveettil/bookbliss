@@ -23,7 +23,9 @@ const RegisterPage = () => {
         confirmPassword: '',
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState('error'); // Default to error
     const navigate = useNavigate();
 
     const handleChange = (event) => {
@@ -36,6 +38,7 @@ const RegisterPage = () => {
 
         if (!firstName || !secondName || !email || !mobileNumber || !password || !confirmPassword) {
             setErrorMessage("All fields are required.");
+            setSnackbarSeverity('error');
             setOpenSnackbar(true);
             return false;
         }
@@ -43,34 +46,75 @@ const RegisterPage = () => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
             setErrorMessage("Please enter a valid email address.");
+            setSnackbarSeverity('error');
             setOpenSnackbar(true);
             return false;
         }
 
         if (password.length < 6) {
             setErrorMessage("Password must be at least 6 characters long.");
+            setSnackbarSeverity('error');
             setOpenSnackbar(true);
             return false;
         }
 
         if (password !== confirmPassword) {
+            console.log(confirmPassword,password);
             setErrorMessage("Passwords don't match.");
+            setSnackbarSeverity('error');
             setOpenSnackbar(true);
+            
             return false;
         }
 
         return true;
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!validateForm()) {
             return;
         }
 
-        // Add your registration logic here  
-        console.log('Registration successful!', formData);
+        const customerData = {
+            name: `${formData.firstName} ${formData.secondName}`,
+            mobile: formData.mobileNumber,
+            password: formData.password,
+            createddate: new Date().toISOString(), // Use current date as created date
+        };
+
+        try {
+            const response = await fetch('https://localhost:44302/API/CreateCustomer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(customerData),
+            });
+debugger;
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            if (data.status === 1 && data.message === "success") {
+                // setSuccessMessage(data.message); // Set success message
+                setErrorMessage(data.message);
+                setSnackbarSeverity('success'); // Set Snackbar severity to success
+                setOpenSnackbar(true);
+                // navigate('/login'); // Redirect to login page after successful registration
+            } else {
+                setErrorMessage(data.message);
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
+            }
+        } catch (error) {
+            setErrorMessage('Registration failed. Please try again.');
+            setSnackbarSeverity('error');
+            setOpenSnackbar(true);
+            console.error('Error during registration:', error);
+        }
     };
 
     const handleCloseSnackbar = () => {
@@ -95,8 +139,7 @@ const RegisterPage = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                         mt: 8,
-                    }}
-                >
+                    }}                >
                     <Typography component="h1" variant="h5">
                         <b> REGISTER</b>
                     </Typography>
@@ -202,8 +245,8 @@ const RegisterPage = () => {
                 onClose={handleCloseSnackbar}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }} // Positioning the Snackbar
             >
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
-                    {errorMessage}
+                <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {errorMessage || successMessage} {/* Display error or success message */}
                 </Alert>
             </Snackbar>
             <Footer />
@@ -212,4 +255,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
 

@@ -13,7 +13,10 @@ import axios from 'axios';
 const Addbook = () => {
   const theme = useTheme();
   const [fileName, setFileName] = useState('');
+  const [fileNamepdf, setFileNamepdf] = useState('');
+
   const [fileUrl, setFileUrl] = useState(null);
+  const [fileUrlPDF, setFileUrlPDF] = useState(null);
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -67,6 +70,7 @@ const Addbook = () => {
   };
 
   const handleFileChange = (event) => {
+    alert("handleFileChange");
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -81,6 +85,23 @@ const Addbook = () => {
     }
   };
 
+
+  const handleFileChangePDF = (event) => {
+    alert("handleFileChangePDF");
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFileUrlPDF(reader.result);
+        setFileNamepdf(file.name);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setFileNamepdf('');
+      setFileUrlPDF(null);
+    }
+  };
+
   const handleSubmit = async () => {
     const data = {
       id: 0,
@@ -92,7 +113,9 @@ const Addbook = () => {
       qnt: bookData.qnt,
       language: bookData.language,
       img: fileUrl ? fileUrl.split(',')[1] : '',
-      doctype: fileUrl ? fileUrl.split(',')[0] : ''
+      doctype: fileUrl ? fileUrl.split(',')[0] : '',
+      Doc:fileUrlPDF ? fileUrlPDF.split(',')[1] : '',
+      doctypeDoc: fileUrlPDF ? fileUrlPDF.split(',')[0] : '',
     };
 
     try {
@@ -186,7 +209,9 @@ const Addbook = () => {
             sx={{ mb: 2 }}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{
+          display: 'flex'
+        }}>
           <Box
             sx={{
               display: 'flex',
@@ -208,7 +233,7 @@ const Addbook = () => {
             }}
           >
             <Typography variant="h6" gutterBottom>
-              Upload a File
+              Upload a Cover Photo
             </Typography>
             <input
               accept="*"
@@ -253,6 +278,80 @@ const Addbook = () => {
                 ) : (
                   <img
                     src={fileUrl}
+                    alt="Uploaded"
+                    style={{ width: '100%', height: 'auto', maxHeight: '400px' }}
+                  />
+                )}
+              </Box>
+            )}
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              padding: 2,
+              border: '1px dashed #ccc',
+              borderRadius: 2,
+              width: '100%',
+              maxWidth: 400,
+              margin: 'auto',
+              position: 'relative',
+              bgcolor: '#f9f9f9',
+              transition: 'background-color 0.3s',
+              '&:hover': {
+                bgcolor: '#e1f5fe',
+              },
+            }}
+          >
+            <Typography variant="h6" gutterBottom>
+              Upload a Book PDF
+            </Typography>
+            <input
+              accept="PDF"
+              style={{ display: 'none' }}
+              id="file-input2"
+              type="file"
+              onChange={handleFileChangePDF}
+            />
+            <label htmlFor="file-input2">
+              <Button
+                variant="contained"
+                component="span"
+                sx={{
+                  marginTop: 1,
+                  bgcolor: '#1976d2',
+                  '&:hover': {
+                    bgcolor: '#1565c0',
+                  },
+                }}
+              >
+                Choose File
+              </Button>
+            </label>
+            {fileNamepdf && (
+              <TextField
+                variant="outlined"
+                value={fileNamepdf}
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{ marginTop: 2, width: '100%' }}
+              />
+            )}
+            {fileUrlPDF && (
+              <Box sx={{ marginTop: 2, textAlign: 'center' }}>
+                {fileNamepdf.endsWith('.pdf') ? (
+                  <iframe
+                    src={fileUrlPDF}
+                    title="Uploaded PDF"
+                    style={{ width: '100%', height: '400px', border: 'none' }}
+                  />
+                ) : (
+                  <img
+                    src={fileUrlPDF}
                     alt="Uploaded"
                     style={{ width: '100%', height: 'auto', maxHeight: '400px' }}
                   />

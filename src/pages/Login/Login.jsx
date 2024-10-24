@@ -12,7 +12,6 @@ const LoginPage = () => {
     const [successMessage, setSuccessMessage] = useState('');  // State for success messages  
     const [openSnackbar, setOpenSnackbar] = useState(false);  
     const [isSuccess, setIsSuccess] = useState(false); // State to track if the message is success  
-    const [WelcomeMsg, SetWelcomeMsg] = useState(''); 
     const navigate = useNavigate();  
 
     const handleLogin = async (event) => {  
@@ -25,24 +24,23 @@ const LoginPage = () => {
             return;  
         }  
 
-        // const mobilePattern = /^[0-9]{10}$/;  
-        // if (!mobilePattern.test(mobile)) {  
-        //     setErrorMessage("Please enter a valid mobile number.");  
-        //     setIsSuccess(false);  
-        //     setOpenSnackbar(true);  
-        //     return;  
-        // }  
-
         try {  
-            const response = await axios.get(`https://localhost:7042/API/custlogin?mobile=${mobile}&Password=${password}`);  
-            const { status, message,name  } = response.data;  
+            const response = await axios.get(`https://localhost:44302/API/custlogin?mobile=${mobile}&Password=${password}`);  
+            const { status, message, id, customerName, mobileNumber } = response.data;  
 
             if (status === 1) {  
-                SetWelcomeMsg("Welcome "+ name);
-                setSuccessMessage(SetWelcomeMsg + WelcomeMsg); // Set success message  
+                // Save customer details to local storage
+                const customerData = {
+                    id: id,
+                    customerName: customerName,
+                    mobileNumber: mobileNumber
+                };
+                localStorage.setItem('customerData', JSON.stringify(customerData)); // Save as JSON
+
+                setSuccessMessage("Login successful! Welcome " + customerName); // Set success message  
                 setIsSuccess(true); // Indicate this is a success message  
                 setOpenSnackbar(true);  
-               navigate('/ProductFeeds');  
+                navigate('/ProductFeeds');  
             } else {  
                 setErrorMessage(message);  
                 setIsSuccess(false);  
@@ -115,7 +113,7 @@ const LoginPage = () => {
                         <Link href="#" variant="body2" onClick={() => alert('Forgot Password')}>  
                             Forgot password?  
                         </Link>  
-                        <Typography variant="body2" align="center" sx={{ mt: 2 }}>  
+                                               <Typography variant="body2" align="center" sx={{ mt: 2 }}>  
                             {"Don't have an account? "}  
                             <Link href="#" onClick={() => navigate('/register')}>  
                                 Register  
@@ -148,4 +146,5 @@ const LoginPage = () => {
     );  
 };  
 
-export default LoginPage;
+export default LoginPage;  
+

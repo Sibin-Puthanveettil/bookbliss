@@ -140,7 +140,7 @@ const PrimarySearchAppBar = () => {
       {/* <MenuItem onClick={() => navigate('/addbook')}>Add Book</MenuItem> */}
       <MenuItem onClick={() => navigate('/Admin')}>Admin</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
-      <MenuItem onClick={() => navigate('/ProductFeeds')}>Logout</MenuItem>
+      <MenuItem onClick={() => {localStorage.removeItem('customerData'); navigate('/ProductFeeds')}}>Logout</MenuItem>
     </Menu>
   );
 
@@ -305,7 +305,7 @@ const PrimarySearchAppBar = () => {
               color="inherit"
             >
               <img
-                src={"https://img.freepik.com/premium-photo/beautiful-anime-woman-passport-size-pic_685680-483.jpg"}
+                src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"}
                 alt="Profile"
                 style={{
                   width: 30,
