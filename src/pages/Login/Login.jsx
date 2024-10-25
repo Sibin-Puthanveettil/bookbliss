@@ -26,14 +26,15 @@ const LoginPage = () => {
 
         try {  
             const response = await axios.get(`https://localhost:44302/API/custlogin?mobile=${mobile}&Password=${password}`);  
-            const { status, message, id, customerName, mobileNumber } = response.data;  
+            const { status, message, id, customerName, mobileNumber,profilePic } = response.data;  
 
             if (status === 1) {  
                 // Save customer details to local storage
                 const customerData = {
                     id: id,
                     customerName: customerName,
-                    mobileNumber: mobileNumber
+                    mobileNumber: mobileNumber,
+                    profilePic: profilePic
                 };
                 localStorage.setItem('customerData', JSON.stringify(customerData)); // Save as JSON
 

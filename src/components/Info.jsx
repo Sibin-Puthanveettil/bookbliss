@@ -8,17 +8,17 @@ const Info = () => {
     <div style={styles.container}>  
       <Box   
         title="Read"   
-        description="Discover thousands of stories, poems, articles, magazines, novels, essays, etc for free. Read popular genres. Save your favourites in your own library. Contents present in the Pratilipi library are filled with endless emotions, thoughts, verses, and possibilities."   
+        description="Discover thousands of stories, poems, articles, magazines, novels, essays, etc for free. Read popular genres. Save your favourites in your own library. Contents present in the Book-Bliss library are filled with endless emotions, thoughts, verses, and possibilities."   
         src={clip1}  
       />  
       <Box   
         title="Write"   
-        description="Self-publish on Pratilipi and join the largest community of writers. Create new drafts, add images and publish right from the app. Pratilipi provides a hassle free and advanced writer panel to make your act of writing a little less scary and a whole lot comforting."   
+        description="Self-publish on Book-Bliss and join the largest community of writers. Create new drafts, add images and publish right from the app. Book-Bliss provides a hassle free and advanced writer panel to make your act of writing a little less scary and a whole lot comforting."   
         src={clip2}  
       />  
       <Box   
         title="Get Involved"   
-        description="Pratilipi brings writers and readers on a single platform. Follow authors to see what they are publishing next, review and discuss. Share your favourites with your fellow readers. Here writers can interact directly with readers and readers can often evolve into writers."   
+        description="Book-Bliss brings writers and readers on a single platform. Follow authors to see what they are publishing next, review and discuss. Share your favourites with your fellow readers. Here writers can interact directly with readers and readers can often evolve into writers."   
         src={clip3}  
       />  
     </div>  

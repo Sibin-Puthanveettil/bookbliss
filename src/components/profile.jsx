@@ -256,15 +256,17 @@ const ProfilePage = () => {
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [ProPic, setProfile] = useState('');
   const [address, setAddress] = useState('');
 
   useEffect(() => {
     // Retrieve customer data from local storage
     const customerData = localStorage.getItem('customerData');
     if (customerData) {
-      const { customerName, mobileNumber } = JSON.parse(customerData);
+      const { customerName, mobileNumber, profilePic } = JSON.parse(customerData);
       setCustomerName(customerName);
       setPhone(mobileNumber);
+      setProfile(profilePic);
       setEmail(''); // Set a default email or retrieve from another source if available
       setAddress(''); // Set a default address or retrieve from another source if available
     }
@@ -288,7 +290,7 @@ const ProfilePage = () => {
         <ProfileHeader>
           <AvatarContainer>
             <Avatar
-              src={avatarFile ? URL.createObjectURL(avatarFile) : "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"}
+              src={avatarFile ? URL.createObjectURL(avatarFile) : ProPic}
               alt="Profile Avatar"
             />
             <AvatarOverlay>

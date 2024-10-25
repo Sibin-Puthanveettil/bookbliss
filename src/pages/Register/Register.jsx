@@ -7,7 +7,8 @@ import {
     Link,
     Box,
     Snackbar,
-    Alert
+    Alert,
+    Avatar
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Footer, Navbar } from "../../components";
@@ -21,6 +22,7 @@ const RegisterPage = () => {
         mobileNumber: '',
         password: '',
         confirmPassword: '',
+        profilePic: null, // Add profilePic to formData
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -29,12 +31,23 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, files } = event.target;
+        if (type === 'file') {
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData({ ...formData, profilePic: reader.result }); // Set the base64 string
+            };
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
-    const validateForm = () => {
-        const { firstName, secondName, email, mobileNumber, password, confirmPassword } = formData;
+    const validateForm = () => { 
+        const { firstName, secondName, email, mobileNumber, password, confirmPassword} = formData;
 
         if (!firstName || !secondName || !email || !mobileNumber || !password || !confirmPassword) {
             setErrorMessage("All fields are required.");
@@ -59,13 +72,18 @@ const RegisterPage = () => {
         }
 
         if (password !== confirmPassword) {
-            console.log(confirmPassword,password);
             setErrorMessage("Passwords don't match.");
             setSnackbarSeverity('error');
             setOpenSnackbar(true);
-            
             return false;
         }
+
+        // if(profilePic==null){
+        //     setErrorMessage("Please Upload Profile Picture !!!"); 
+        //     setSnackbarSeverity('error');
+        //     setOpenSnackbar(true);
+        //     return false;
+        // }
 
         return true;
     };
@@ -76,12 +94,13 @@ const RegisterPage = () => {
         if (!validateForm()) {
             return;
         }
-
+debugger;
         const customerData = {
             name: `${formData.firstName} ${formData.secondName}`,
             mobile: formData.mobileNumber,
             password: formData.password,
             createddate: new Date().toISOString(), // Use current date as created date
+            profilePic: formData.profilePic!=null ? formData.profilePic.split(",")[1]:"", // Include profile picture in the data
         };
 
         try {
@@ -92,18 +111,17 @@ const RegisterPage = () => {
                 },
                 body: JSON.stringify(customerData),
             });
-debugger;
+
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const data = await response.json();
             if (data.status === 1 && data.message === "success") {
-                // setSuccessMessage(data.message); // Set success message
                 setErrorMessage(data.message);
                 setSnackbarSeverity('success'); // Set Snackbar severity to success
                 setOpenSnackbar(true);
-                // navigate('/login'); // Redirect to login page after successful registration
+                navigate('/login'); // Redirect to login page after successful registration
             } else {
                 setErrorMessage(data.message);
                 setSnackbarSeverity('error');
@@ -139,11 +157,30 @@ debugger;
                         flexDirection: 'column',
                         alignItems: 'center',
                         mt: 8,
-                    }}                >
+                    }}
+                >
                     <Typography component="h1" variant="h5">
                         <b> REGISTER</b>
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, display: 'flex', flexDirection: 'column' }}>
+                        {/* Profile Picture Upload */}
+                        <Box sx={{ mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Avatar
+                                src={formData.profilePic} // Display the uploaded image
+                                sx={{ width: 100, height: 100, mb: 2, border: '2px solid #333' }} // Circular avatar with border
+                            />
+                            <Button variant="contained" component="label">
+                                Upload Profile Picture
+                                <input
+                                    type="file"
+                                    hidden
+                                    accept="image/*"
+                                    onChange={handleChange}
+                                    name="profilePic"
+                                />
+                            </Button>
+                        </Box>
+
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                             <TextField
                                 margin="normal"

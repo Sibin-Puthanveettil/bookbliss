@@ -17,11 +17,11 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import { useNavigate } from 'react-router-dom';
 import sitelogo from '../Picture1.png';  // Logo import  
 import LoginIcon from '@mui/icons-material/Login';
 import '../../src/App.css';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -137,10 +137,9 @@ const PrimarySearchAppBar = () => {
       <MenuItem onClick={() => navigate('/profile')}>My Account</MenuItem>
       <MenuItem onClick={() => navigate('/cart')}>Cart</MenuItem>
       <MenuItem onClick={() => navigate('/Orders')}>Orders</MenuItem>
-      {/* <MenuItem onClick={() => navigate('/addbook')}>Add Book</MenuItem> */}
       <MenuItem onClick={() => navigate('/Admin')}>Admin</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
-      <MenuItem onClick={() => {localStorage.removeItem('customerData'); navigate('/ProductFeeds')}}>Logout</MenuItem>
+      <MenuItem onClick={() => { navigate('/ProductFeeds') }}>Logout</MenuItem>
     </Menu>
   );
 
@@ -215,7 +214,6 @@ const PrimarySearchAppBar = () => {
         color: 'white',
         display: 'flex',
         flexDirection: 'column',
-
         padding: 0,
       }}
       role="presentation"
@@ -229,6 +227,7 @@ const PrimarySearchAppBar = () => {
             <ListItem
               button
               key={item}
+              onClick={() => navigate(`/${item.replace(/\s+/g, '').toLowerCase()}`)} // Navigate to the respective page
               sx={{
                 cursor: 'pointer',
                 '&:hover': {
@@ -245,19 +244,18 @@ const PrimarySearchAppBar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, color: 'white', }}>
-      <AppBar position="static" sx={{ backgroundColor: 'transparent ! important', color: 'white' }} elevation={0}>
-        <Toolbar sx={{ backgroundColor: 'transparent ! important', color: 'white' }}>
+    <Box sx={{ flexGrow: 1, color: 'white' }}>
+      <AppBar position="static" sx={{ backgroundColor: 'transparent !important', color: 'white' }} elevation={0}>
+        <Toolbar sx={{ backgroundColor: 'transparent !important', color: 'white' }}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            sx={{ mr: 2, color: '#2d1819', backgroundColor: 'transparent ! important' }}
+            sx={{ mr: 2, color: '#2d1819', backgroundColor: 'transparent !important' }}
           >
-            <MenuIcon />
-          </IconButton>
+            <MenuIcon />          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -305,7 +303,7 @@ const PrimarySearchAppBar = () => {
               color="inherit"
             >
               <img
-                src={"https://mir-s3-cdn-cf.behance.net/project_modules/disp/3c9f4a40760693.578c9a4699778.gif"}
+                src={JSON.parse(localStorage.getItem('customerData')).profilePic}
                 alt="Profile"
                 style={{
                   width: 30,
@@ -332,7 +330,7 @@ const PrimarySearchAppBar = () => {
       {renderMobileMenu}
       {renderMenu}
       {renderNotificationMenu}
-      <Drawer open={drawerOpen} onClose={handleDrawerClose} >
+      <Drawer open={drawerOpen} onClose={handleDrawerClose}>
         {sidebarList()}
       </Drawer>
     </Box>
