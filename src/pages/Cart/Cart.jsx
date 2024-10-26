@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -12,28 +12,38 @@ import {
   ListItemText,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      title: "Product 1",
-      image: "https://via.placeholder.com/100",
-      price: 20.0,
-      qty: 1,
-    },
-    {
-      id: 2,
-      title: "Product 2",
-      image: "https://via.placeholder.com/100",
-      price: 30.0,
-      qty: 2,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    // Retrieve the items from localStorage
+    const addedCart = localStorage.getItem("AddedCart");
+    if (addedCart) {
+      const products = JSON.parse(addedCart);
+      // Ensure products is an array
+      const productsArray = Array.isArray(products) ? products : [products];
+
+      // Create a new cartItems array without duplicates
+      const updatedCartItems = productsArray.reduce((acc, product) => {
+        const existingItem = acc.find(item => item.id === product.id);
+        if (existingItem) {
+          // If it exists, update the quantity
+          existingItem.qty += 1;
+        } else {
+          // If it doesn't exist, add it to the cart with a quantity of 1
+          acc.push({ ...product, qty: 1 });
+        }
+        return acc;
+      }, []);
+
+      setCartItems(updatedCartItems);
+    }
+  }, []); // Empty dependency array to run only once on mount
 
   const addItem = (product) => {
     const updatedCart = cartItems.map((item) =>
@@ -72,6 +82,14 @@ const Cart = () => {
       totalItems += item.qty;
     });
 
+    const PriceList={
+      subtotal:subtotal,
+      totalItems,totalItems
+    }
+
+
+    localStorage.setItem('PriceList', JSON.stringify(PriceList));
+
     return (
       <Container>
         <Grid container spacing={3}>
@@ -85,12 +103,13 @@ const Cart = () => {
                   <Box key={item.id} sx={{ mb: 2, borderBottom: '1px solid #ccc', pb: 2 }}>
                     <Grid container alignItems="center" spacing={2}>
                       <Grid item xs={4}>
-                        <img src={'https://bookshub.co.in/public/books/9788172242190.jpg'} alt={item.title} width={100} style={{ borderRadius: '8px' }} />
+                        <img src={item.doctype + "," + item.img} alt={item.name} width={100} style={{ borderRadius: '8px' }} />
                       </Grid>
                       <Grid item xs={5}>
                         <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                          {item.title}
+                          {item.name}
                         </Typography>
+                        <Typography variant="body2">{item.description}</Typography>
                       </Grid>
                       <Grid item xs={3}>
                         <CardActions>
@@ -103,7 +122,7 @@ const Cart = () => {
                           </Button>
                         </CardActions>
                         <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                          ${(item.price * item.qty).toFixed(2)}
+                          ₹{(item.price * item.qty).toFixed(2)}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -121,16 +140,16 @@ const Cart = () => {
                 <List>
                   <ListItem>
                     <ListItemText primary={`Products (${totalItems})`} />
-                    <Typography>${subtotal.toFixed(2)}</Typography>
+                    <Typography>₹{subtotal.toFixed(2)}</Typography>
                   </ListItem>
                   <ListItem>
                     <ListItemText primary="Shipping" />
-                    <Typography>${shipping.toFixed(2)}</Typography>
+                    <Typography>₹{shipping.toFixed(2)}</Typography>
                   </ListItem>
                   <ListItem>
                     <ListItemText primary={<strong>Total amount</strong>} />
                     <Typography>
-                      <strong>${(subtotal + shipping).toFixed(2)}</strong>
+                      <strong>₹{(subtotal + shipping).toFixed(2)}</strong>
                     </Typography>
                   </ListItem>
                 </List>
@@ -161,4 +180,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

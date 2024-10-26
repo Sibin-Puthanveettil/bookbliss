@@ -73,12 +73,10 @@ const PrimarySearchAppBar = () => {
   const [notificationMenuAnchorEl, setNotificationMenuAnchorEl] = React.useState(null);
 
   const notifications = [
-    "New book added: 'The Great Gatsby'",
-    "Your order has been shipped!",
-    "Reminder: Your book return is due soon.",
-    "New message from the support team.",
-    "A new review has been posted on your book."
-  ];
+    
+    ...(JSON.parse(localStorage.getItem('AddedCart')) || []).map(order => `Order placed for: '${order.name}'`)
+];
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

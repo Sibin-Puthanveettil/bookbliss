@@ -94,6 +94,16 @@ const ProductFeeds = () => {
                 [book.id]: !prevCart[book.id],
             }));
             toast.success('Book added to cart!');
+            let booksArray = JSON.parse(localStorage.getItem('AddedCart')) || []; // Retrieve existing books or initialize an empty array
+
+            if (!booksArray.some(existingBook => existingBook.id === book.id)) { // Assuming each book has a unique 'id'
+                booksArray.push(book); // Add the book if it doesn't already exist
+            }
+            
+            localStorage.setItem('AddedCart', JSON.stringify(booksArray)); // Save as JSON
+            
+
+
         } else {
             toast.error('Please log in to add items to your cart.');
             navigate('/login');
