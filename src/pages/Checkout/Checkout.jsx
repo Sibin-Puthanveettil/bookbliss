@@ -14,11 +14,14 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Snackbar, // Import Snackbar for success message
+  Snackbar,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Footer, Navbar } from "../../components";
-import { Payment } from "@mui/icons-material"; // Importing an icon  
+import { Payment } from "@mui/icons-material";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -29,23 +32,20 @@ const Checkout = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false); // State for Snackbar
 
   useEffect(() => {
-    // Retrieve the items from localStorage
     const addedCart = localStorage.getItem("AddedCart");
     if (addedCart) {
       const products = JSON.parse(addedCart);
-      // Ensure products is an array
       const productsArray = Array.isArray(products) ? products : [products];
       setCartItems(productsArray);
     }
 
-    // Retrieve PriceList from localStorage
     const priceList = localStorage.getItem("PriceList");
     if (priceList) {
       const priceData = JSON.parse(priceList);
       setSubtotal(priceData.subtotal || 0);
       setTotalItems(priceData.totalItems || 0);
     }
-  }, []); // Empty dependency array to run only once on mount
+  }, []);
 
   const clearCart = () => {
     localStorage.removeItem("AddedCart");
@@ -56,9 +56,9 @@ const Checkout = () => {
   };
 
   const handleCheckout = (e) => {
-    e.preventDefault(); // Prevent default form submission
-    localStorage.setItem("purchase", JSON.stringify({ purchase: true })); // Set purchase status in local storage
-    setOpenSnackbar(true); // Open success message
+    e.preventDefault();
+    localStorage.setItem("purchase", JSON.stringify({ purchase: true }));
+    setOpenSnackbar(true);
   };
 
   const EmptyCart = () => (
@@ -75,7 +75,6 @@ const Checkout = () => {
   const ShowCheckout = () => {
     return (
       <Container>
-        {/* Back to Cart Button at the top left */}
         <Link to="/cart" style={{ textDecoration: 'none', marginBottom: '16px' }}>
           <Button variant="outlined" color="default">
             Back to Cart
@@ -154,20 +153,27 @@ const Checkout = () => {
                     <Grid item xs={12}>
                       <Typography variant="h6" style={{ marginTop: '16px' }}>Payment</Typography>
                       {/* Payment Mode Selection */}
-                      <FormControl fullWidth required style={{ marginBottom: '16px' }}>
-                        <InputLabel>Payment Method</InputLabel>
-                        <Select
+                      <FormControl component="fieldset" required style={{ marginBottom: '16px' }}>
+                        <RadioGroup
                           value={paymentMode}
                           onChange={(e) => setPaymentMode(e.target.value)}
-                          displayEmpty
                         >
-                          <MenuItem value="">
-                            <em>Choose...</em>
-                          </MenuItem>
-                          <MenuItem value="credit-card">Credit Card</MenuItem>
-                          <MenuItem value="paypal">PayPal</MenuItem>
-                          <MenuItem value="bank-transfer">Bank Transfer</MenuItem>
-                        </Select>
+                          <FormControlLabel
+                            value="credit-card"
+                            control={<Radio />}
+                            label="Credit Card"
+                          />
+                          <FormControlLabel
+                            value="paypal"
+                            control={<Radio />}
+                            label="PayPal"
+                          />
+                          <FormControlLabel
+                            value="bank-transfer"
+                            control={<Radio />}
+                            label="Bank Transfer"
+                          />
+                        </RadioGroup>
                       </FormControl>
                       <TextField
                         label="Name on card"

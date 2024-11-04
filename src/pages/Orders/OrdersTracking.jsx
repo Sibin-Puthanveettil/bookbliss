@@ -34,43 +34,46 @@ function OrdersTracking() {
         container: {
             maxWidth: '800px',
             margin: '40px auto',
-            padding: '30px',
-            backgroundColor: '#fff',
-            borderRadius: '10px',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+            padding: '40px',
+            backgroundColor: '#f8f8f8',
+            borderRadius: '20px',
+            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.1)',
         },
         title: {
             textAlign: 'center',
-            marginBottom: '30px',
-            fontSize: '32px',
+            marginBottom: '40px',
+            fontSize: '36px',
             color: '#333',
+            fontWeight: 'bold',
         },
         detail: {
-            marginBottom: '20px',
-            fontSize: '16px',
+            marginBottom: '25px',
+            fontSize: '18px',
             color: '#555',
+            lineHeight: '1.6',
         },
         trackingContainer: {
-            marginTop: '30px',
-            padding: '20px',
+            marginTop: '40px',
+            padding: '30px',
             border: '2px solid #007bff',
-            borderRadius: '8px',
+            borderRadius: '12px',
             backgroundColor: '#f0f8ff',
             color: '#007bff',
             fontWeight: 'bold',
         },
         image: {
             display: 'block',
-            margin: '20px auto',
-            maxWidth: '150px',
+            margin: '30px auto',
+            maxWidth: '200px',
             height: 'auto',
+            borderRadius: '12px',
         },
         photo: {
             display: 'block',
-            margin: '20px auto',
-            maxWidth: '300px',
+            margin: '30px auto',
+            maxWidth: '400px',
             height: 'auto',
-            borderRadius: '8px',
+            borderRadius: '12px',
         },
     };
 
@@ -88,7 +91,7 @@ function OrdersTracking() {
                     <p style={styles.detail}>Price: {orderDetails.price}</p>
                     <p style={styles.detail}>Category: {orderDetails.category}</p>
                     <p style={styles.detail}>Description: {orderDetails.description}</p>
-                    <img src={orderDetails.doctypeDoc+','+orderDetails.img} alt={orderDetails.name} style={styles.image} />
+                    <img src={orderDetails.doctypeDoc + ',' + orderDetails.img} alt={orderDetails.name} style={styles.image} />
 
                     {/* Tracking Status Section */}
                     <div style={styles.trackingContainer}>
@@ -98,12 +101,11 @@ function OrdersTracking() {
                         <p>Expected Delivery Date: June 10, 2023</p> {/* Hardcoded expected delivery date */}
                     </div>
                 </>
-            ) : (
-                <p>No order details found.</p>
+            ) : (<p>No order details found.</p>
             )}
         </div>
     );
 }
 
-
 export default OrdersTracking;
+
