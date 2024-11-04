@@ -86,9 +86,10 @@ const ProductFeeds = () => {
     };
 
     const handleAddClick = (book) => {
-        const customerData = localStorage.getItem('customerData');
-        console.log(customerData, "customerData");
-        if (customerData!=null) {  
+        debugger;
+        const customerData = JSON.parse(localStorage.getItem('customerData'));
+       
+        if (customerData) {
             setCart((prevCart) => ({
                 ...prevCart,
                 [book.id]: !prevCart[book.id],
@@ -99,10 +100,8 @@ const ProductFeeds = () => {
             if (!booksArray.some(existingBook => existingBook.id === book.id)) { // Assuming each book has a unique 'id'
                 booksArray.push(book); // Add the book if it doesn't already exist
             }
-            
-            localStorage.setItem('AddedCart', JSON.stringify(booksArray)); // Save as JSON
-            
 
+            localStorage.setItem('AddedCart', JSON.stringify(booksArray)); // Save as JSON
 
         } else {
             toast.error('Please log in to add items to your cart.');

@@ -115,6 +115,14 @@ const PrimarySearchAppBar = () => {
     setNotificationMenuAnchorEl(null);
   };
 
+
+  const setLogout=()=>{
+    localStorage.setItem("AddedCart",null);
+    localStorage.setItem("customerData",null);
+    localStorage.setItem("purchase",null);
+    localStorage.setItem("PriceList",null);
+
+  }
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -137,7 +145,7 @@ const PrimarySearchAppBar = () => {
       <MenuItem onClick={() => navigate('/Orders')}>Orders</MenuItem>
       <MenuItem onClick={() => navigate('/Admin')}>Admin</MenuItem>
       <MenuItem onClick={() => navigate('/about')}>About Us</MenuItem>
-      <MenuItem onClick={() => { navigate('/ProductFeeds') }}>Logout</MenuItem>
+      <MenuItem onClick={() => { navigate('/ProductFeeds');setLogout()}}>Logout</MenuItem>
     </Menu>
   );
 
@@ -301,7 +309,9 @@ const PrimarySearchAppBar = () => {
               color="inherit"
             >
               <img
-                src={JSON.parse(localStorage.getItem('customerData')).profilePic}
+                src={
+                  (JSON.parse(localStorage.getItem('customerData'))?.profilePic || 'https://blogtimenow.com/wp-content/uploads/2014/06/hide-facebook-profile-picture-notification.jpg')
+              } 
                 alt="Profile"
                 style={{
                   width: 30,

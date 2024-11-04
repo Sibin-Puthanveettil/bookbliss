@@ -261,9 +261,10 @@ const ProfilePage = () => {
 
   useEffect(() => {
     // Retrieve customer data from local storage
-    const customerData = localStorage.getItem('customerData');
+debugger;
+    const customerData = JSON.parse(localStorage.getItem('customerData')) || { customerName: "USER NAME", mobileNumber: "98765XXXXX", profilePic: "https://blogtimenow.com/wp-content/uploads/2014/06/hide-facebook-profile-picture-notification.jpg" }; // 
     if (customerData) {
-      const { customerName, mobileNumber, profilePic } = JSON.parse(customerData);
+      const { customerName, mobileNumber, profilePic } = customerData;
       setCustomerName(customerName);
       setPhone(mobileNumber);
       setProfile(profilePic);
