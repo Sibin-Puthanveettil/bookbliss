@@ -44,7 +44,8 @@ function Orders() {
     return (
         <div style={styles.container}>
             <h1 style={styles.title}>Your Orders</h1>
-            {orders.length > 0 ? (
+           
+            {orders!=null ? (
                 orders.map(order => (
                     <div
                         key={order.id}
