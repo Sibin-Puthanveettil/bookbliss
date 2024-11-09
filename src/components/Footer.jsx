@@ -26,7 +26,7 @@ const SocialIcon = styled(IconButton)(({ theme }) => ({
 
 const Footer = () => {
   return (
-    <FooterContainer component="footer" sx={{backgroundColor:'#333'}}>
+    <FooterContainer component="footer" sx={{ backgroundColor: '#8c29a6' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={3}>
@@ -34,9 +34,9 @@ const Footer = () => {
               About Us
             </Typography>
             <Typography variant="body2">
-            <b>Welcome to Book Bliss !!!!</b>
-<br/>
-At The Enchanted Shelf, we believe that every book holds a world of magic, waiting to be discovered. Nestled in the heart of Thrissur, Kerala, our bookstore is more than just a place to buy books—it’s a haven for book lovers, a community hub, and a sanctuary for the curious mind.
+              <b>Welcome to Book Bliss !!!!</b>
+              <br />
+              At The Enchanted Shelf, we believe that every book holds a world of magic, waiting to be discovered. Nestled in the heart of Thrissur, Kerala, our bookstore is more than just a place to buy books—it’s a haven for book lovers, a community hub, and a sanctuary for the curious mind.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
@@ -83,7 +83,7 @@ At The Enchanted Shelf, we believe that every book holds a world of magic, waiti
         </Grid>
         <Box mt={5}>
           <Typography variant="body2" align="center">
-          <img src={sitelogo} width={150}/><br/>
+            <img src={sitelogo} width={150} /><br />
             © {new Date().getFullYear()}   All rights reserved.
           </Typography>
         </Box>
@@ -93,3 +93,4 @@ At The Enchanted Shelf, we believe that every book holds a world of magic, waiti
 };
 
 export default Footer;
+

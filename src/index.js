@@ -7,8 +7,21 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookCarousel from './components/BookCarousel';
 import ProductGallery from './components/ProductGallery';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import About from './pages/About/About';
+import Cart from './pages/Cart/Cart';
+import Addbook from './pages/Dashbord/Addbook/Addbook';
+import Checkout from './pages/Checkout/Checkout';
 import Profile from './components/profile';
+import ProductFeeds from './components/ProductFeeds';
+import Banner from './components/Banner';
+import Orders from './pages/Orders/Orders';
+import OrdersTracking from './pages/Orders/OrdersTracking'
+import Admin from './pages/Admin/Admin';
+import LanguagePage from './pages/Admin/LanguagePage';
+import Categories from './pages/Admin/Categories';
+import Info from './components/Info';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -22,39 +35,113 @@ const router = createBrowserRouter([
     element: (
       <div>
         <Navbar />
-        <BookCarousel />
-        <ProductGallery/>
-        <Footer/>
+        
+        <Banner /><Info />
+        {/* <ProductGallery/> */}
+        {/* <BookCarousel /> */}
+
+        <ProductFeeds />
+        <Footer />
       </div>
     ),
   },
   {
-    path: "./login", 
-    element:(
+    path: "/login",
+    element: (
       <div>
-    <Login/>
-    </div>
+        <Login />
+      </div>
     )
   },
   {
-    path: "about",
-    element: <div>About</div>,
+    path: "/register",
+    element: (
+      <div>
+        <Register />
+      </div>
+    )
+  },
+  {
+    path: "/about",
+    element: <div><About /></div>,
   },
 
   {
-    path: "profile",
-    element:<><Navbar />
-    <Profile/>
-    <Footer/></> 
+    path: "/cart",
+    element: <div><Navbar />
+      <Cart />
+      <Footer /></div>,
+  },
+  {
+    path: "/addbook",
+    element: <div><Navbar />
+      <Addbook />
+      <Footer /></div>,
+  },
+  {
+    path: "/checkout",
+    element: <div><Checkout /></div>,
+  },
+
+  {
+    path: "/profile",
+    element: <div><Navbar />
+      <Profile />
+      <Footer /></div>,
+  },
+  {
+    path: "/Orders",
+    element: <div><Navbar />
+      <Orders />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/OrdersTracking",
+    element: <div><Navbar />
+      <OrdersTracking />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/Admin",
+    element: <div><Navbar />
+      <Admin />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/LanguagePage",
+    element: <div><Navbar />
+      <LanguagePage />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/Categories",
+    element: <div><Navbar />
+      <Categories />
+      <Footer /></div>,
+  },
+
+  {
+    path: "/ProductFeeds",
+    element: <div><Navbar />
+     <Banner />
+      <ProductFeeds />
+      <Footer /></div>,
   },
 ]);
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <RouterProvider router={router}>
+    <RouterProvider router={router}>
       <App />
-     </RouterProvider>
+    </RouterProvider>
   </React.StrictMode>
 );
 
@@ -62,3 +149,5 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+
