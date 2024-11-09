@@ -155,8 +155,8 @@ const Checkout = () => {
                       {/* Payment Mode Selection */}
                       <FormControl component="fieldset" required style={{ marginBottom: '16px' }}>
                         <RadioGroup
-                          value={paymentMode}
-                          onChange={(e) => setPaymentMode(e.target.value)}
+                          
+                          
                         >
                           <FormControlLabel
                             value="credit-card"

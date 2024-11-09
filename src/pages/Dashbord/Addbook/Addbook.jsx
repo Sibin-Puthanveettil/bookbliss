@@ -70,7 +70,7 @@ const Addbook = () => {
   };
 
   const handleFileChange = (event) => {
-    alert("handleFileChange");
+  //  alert("handleFileChange");
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -87,7 +87,7 @@ const Addbook = () => {
 
 
   const handleFileChangePDF = (event) => {
-    alert("handleFileChangePDF");
+  //  alert("handleFileChangePDF");
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -122,6 +122,9 @@ const Addbook = () => {
       const response = await axios.post('https://localhost:44302/API/Addproducts', data);
       setSnackbarMessage(response.data.message);
       setSnackbarSeverity('success');
+      setTimeout(() => {  
+        window.location.reload();  
+      }, 3000); 
     } catch (error) {
       setSnackbarMessage('Error submitting data: ' + error.message);
       setSnackbarSeverity('error');

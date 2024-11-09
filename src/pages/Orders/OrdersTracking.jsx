@@ -98,8 +98,9 @@ function OrdersTracking() {
                         <h3>Tracking Information</h3>
                         <p>Tracking Status: Shipped</p>
                         <p>Tracking Number: {orderDetails.id}</p>
-                        <p>Expected Delivery Date: June 10, 2023</p> {/* Hardcoded expected delivery date */}
-                    </div>
+                        <p>
+                            Expected Delivery Date: {new Date(new Date().setDate(new Date().getDate() + 10)).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>                      </div>
                 </>
             ) : (<p>No order details found.</p>
             )}
