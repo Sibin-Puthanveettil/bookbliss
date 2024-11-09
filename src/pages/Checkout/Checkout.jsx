@@ -143,7 +143,34 @@ const Checkout = () => {
                         <InputLabel>State</InputLabel>
                         <Select defaultValue="">
                           <MenuItem value="">Choose...</MenuItem>
+                          <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
+                          <MenuItem value="Arunachal Pradesh">Arunachal Pradesh</MenuItem>
+                          <MenuItem value="Assam">Assam</MenuItem>
+                          <MenuItem value="Bihar">Bihar</MenuItem>
+                          <MenuItem value="Chhattisgarh">Chhattisgarh</MenuItem>
+                          <MenuItem value="Goa">Goa</MenuItem>
+                          <MenuItem value="Gujarat">Gujarat</MenuItem>
+                          <MenuItem value="Haryana">Haryana</MenuItem>
+                          <MenuItem value="Himachal Pradesh">Himachal Pradesh</MenuItem>
+                          <MenuItem value="Jharkhand">Jharkhand</MenuItem>
+                          <MenuItem value="Karnataka">Karnataka</MenuItem>
+                          <MenuItem value="Kerala">Kerala</MenuItem>
+                          <MenuItem value="Madhya Pradesh">Madhya Pradesh</MenuItem>
+                          <MenuItem value="Maharashtra">Maharashtra</MenuItem>
+                          <MenuItem value="Manipur">Manipur</MenuItem>
+                          <MenuItem value="Meghalaya">Meghalaya</MenuItem>
+                          <MenuItem value="Mizoram">Mizoram</MenuItem>
+                          <MenuItem value="Nagaland">Nagaland</MenuItem>
+                          <MenuItem value="Odisha">Odisha</MenuItem>
                           <MenuItem value="Punjab">Punjab</MenuItem>
+                          <MenuItem value="Rajasthan">Rajasthan</MenuItem>
+                          <MenuItem value="Sikkim">Sikkim</MenuItem>
+                          <MenuItem value="Tamil Nadu">Tamil Nadu</MenuItem>
+                          <MenuItem value="Telangana">Telangana</MenuItem>
+                          <MenuItem value="Tripura">Tripura</MenuItem>
+                          <MenuItem value="Uttar Pradesh">Uttar Pradesh</MenuItem>
+                          <MenuItem value="Uttarakhand">Uttarakhand</MenuItem>
+                          <MenuItem value="West Bengal">West Bengal</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
@@ -155,8 +182,8 @@ const Checkout = () => {
                       {/* Payment Mode Selection */}
                       <FormControl component="fieldset" required style={{ marginBottom: '16px' }}>
                         <RadioGroup
-                          
-                          
+
+
                         >
                           <FormControlLabel
                             value="credit-card"
@@ -191,9 +218,13 @@ const Checkout = () => {
                         <Grid item xs={6}>
                           <TextField
                             label="Expiration"
-                            required
-                            fullWidth
-                            style={{ marginBottom: '16px' }}
+                            required  
+                            fullWidth  
+                            style={{ marginBottom: '16px' }}  
+                            helperText="Please enter date in YYYY/DD format"  
+                            inputProps={{  
+                              pattern: "^[0-9]{4}/[0-9]{2}$", // Regex pattern to validate YYYY/DD format  
+                            }}  
                           />
                         </Grid>
                         <Grid item xs={6}>
